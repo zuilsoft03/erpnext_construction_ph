@@ -1,0 +1,197 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-09-28 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "vo_number",
+  "project",
+  "vo_date",
+  "vo_type",
+  "cor",
+  "description",
+  "original_contract_amount",
+  "dupa_breakdown",
+  "variation_amount",
+  "revised_contract_amount",
+  "time_impact_days",
+  "status",
+  "approved_by",
+  "approved_on"
+ ],
+ "fields": [
+  {
+   "fieldname": "vo_number",
+   "fieldtype": "Data",
+   "label": "VO Number",
+   "reqd": 1,
+   "unique": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Construction Project",
+   "reqd": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "vo_date",
+   "fieldtype": "Date",
+   "label": "VO Date",
+   "reqd": 1,
+   "default": "Today"
+  },
+  {
+   "fieldname": "vo_type",
+   "fieldtype": "Select",
+   "label": "VO Type",
+   "options": "\nChange Order\nVariation",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cor",
+   "fieldtype": "Data",
+   "label": "Change Order Request Ref",
+   "reqd": 1,
+   "set_only_once": 1,
+   "description": "Reference to the COR that authorises this variation. A COR reference is required before monetary approval. Kept as a reference, not a Link: no COR doctype exists in the approved data model, and adding one would push the module past the 13-doctype count the CORE-03 gate fixes (D-016)."
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description",
+   "reqd": 1
+  },
+  {
+   "fieldname": "original_contract_amount",
+   "fieldtype": "Currency",
+   "label": "Original Contract Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "dupa_breakdown",
+   "fieldtype": "Table",
+   "label": "DUPA Breakdown",
+   "options": "VO Cost Breakdown",
+   "description": "Labor, material and equipment, each a measured quantity at a rate. The variation_amount is derived from this plus OCM, profit and VAT (D-028); it is not typed."
+  },
+  {
+   "fieldname": "variation_amount",
+   "fieldtype": "Currency",
+   "label": "Variation Amount",
+   "reqd": 1
+  },
+  {
+   "fieldname": "revised_contract_amount",
+   "fieldtype": "Currency",
+   "label": "Revised Contract Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "time_impact_days",
+   "fieldtype": "Int",
+   "label": "Time Impact (days)",
+   "default": "0"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "\nDraft\nPending Approval\nApproved\nRejected\nExecuted",
+   "default": "Draft",
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "approved_by",
+   "fieldtype": "Link",
+   "label": "Approved By",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "approved_on",
+   "fieldtype": "Datetime",
+   "label": "Approved On",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 0,
+ "links": [],
+ "modified": "2026-09-28 06:08:30.000000",
+ "modified_by": "Administrator",
+ "module": "Construction PH",
+ "name": "Construction Variation Order",
+ "name_case": "Title Case",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "report": 1,
+   "write": 1,
+   "create": 1,
+   "submit": 1,
+   "delete": 1
+  },
+  {
+   "role": "Construction Project Manager",
+   "read": 1,
+   "report": 1,
+   "write": 1,
+   "create": 1,
+   "submit": 1
+  },
+  {
+   "role": "Construction Contract Administrator",
+   "read": 1,
+   "report": 1,
+   "write": 1,
+   "create": 1
+  },
+  {
+   "role": "Construction BIM Coordinator",
+   "read": 1,
+   "report": 1
+  },
+  {
+   "role": "Construction Buyer",
+   "read": 1,
+   "report": 1
+  },
+  {
+   "role": "Construction Contract Administrator",
+   "read": 1,
+   "report": 1
+  },
+  {
+   "role": "Construction Design Lead",
+   "read": 1,
+   "report": 1
+  },
+  {
+   "role": "Construction Field Foreman",
+   "read": 1,
+   "report": 1
+  },
+  {
+   "role": "Construction Planner",
+   "read": 1,
+   "report": 1
+  },
+  {
+   "role": "Construction Site Manager",
+   "read": 1,
+   "report": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "autoname": "field:vo_number",
+ "title_field": "vo_number"
+}

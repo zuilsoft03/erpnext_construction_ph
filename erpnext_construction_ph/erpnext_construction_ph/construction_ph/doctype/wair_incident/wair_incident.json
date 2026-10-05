@@ -1,0 +1,167 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-09-28 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "incident_number",
+  "project",
+  "project_name",
+  "occurred_at",
+  "reported_at",
+  "location",
+  "incident_type",
+  "persons_involved",
+  "injured_persons",
+  "fatalities",
+  "immediate_actions",
+  "lti_classification",
+  "clock_section",
+  "notification_deadline",
+  "hours_remaining",
+  "notification_status",
+  "notified_at",
+  "sti_reference",
+  "remarks"
+ ],
+ "fields": [
+  {
+   "fieldname": "incident_number",
+   "fieldtype": "Data",
+   "label": "Incident Number",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Construction Project",
+   "reqd": 1
+  },
+  {
+   "fieldname": "project_name",
+   "fieldtype": "Data",
+   "label": "Project Name",
+   "read_only": 1,
+   "description": "Denormalised at save so the statutory report renders without a live lookup, and so a report issued years later still names the project as it stood."
+  },
+  {
+   "fieldname": "occurred_at",
+   "fieldtype": "Datetime",
+   "label": "Occurred At",
+   "reqd": 1,
+   "description": "When the incident happened. The 24-hour notification clock starts here, not at the moment it was reported."
+  },
+  {
+   "fieldname": "reported_at",
+   "fieldtype": "Datetime",
+   "label": "Reported At",
+   "read_only": 1
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Data",
+   "label": "Location"
+  },
+  {
+   "fieldname": "incident_type",
+   "fieldtype": "Select",
+   "label": "Incident Type",
+   "options": "\nFatality\nInjury\nNear Miss\nProperty Damage\nEnvironmental",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "persons_involved",
+   "fieldtype": "Int",
+   "label": "Persons Involved",
+   "default": "0"
+  },
+  {
+   "fieldname": "injured_persons",
+   "fieldtype": "Int",
+   "label": "Persons Injured",
+   "default": "0"
+  },
+  {
+   "fieldname": "fatalities",
+   "fieldtype": "Int",
+   "label": "Fatalities",
+   "default": "0"
+  },
+  {
+   "fieldname": "immediate_actions",
+   "fieldtype": "Small Text",
+   "label": "Immediate Actions",
+   "description": "What was done at the scene. Required on an incident report because 'nothing' is itself a reportable finding."
+  },
+  {
+   "fieldname": "lti_classification",
+   "fieldtype": "Select",
+   "label": "LTI Classification",
+   "options": "\nNo lost time\nTemporary Total Disability\nTemporary Partial Disability\nPermanent Partial Disability\nPermanent Total Disability\nFatality",
+   "description": "The loss-time record the statutory report reads. Left EMPTY it means 'not yet classified' and the report REFUSES; it must never be read as zero lost days. 'No lost time' is a positive classification and is a different value from empty."
+  },
+  {
+   "fieldname": "clock_section",
+   "fieldtype": "Section Break",
+   "label": "LTI Notification Clock"
+  },
+  {
+   "fieldname": "notification_deadline",
+   "fieldtype": "Datetime",
+   "label": "Notification Deadline",
+   "read_only": 1,
+   "no_copy": 1,
+   "description": "occurred_at + 24 hours, stamped on save and never recomputed, so editing the record cannot move it. The 24-hour LTI notification window is this app's configured specification; the governing instrument is NOT recorded here because it has not been verified against the source text. Confirm it before relying on this field in a filing."
+  },
+  {
+   "fieldname": "hours_remaining",
+   "fieldtype": "Float",
+   "label": "Hours Remaining",
+   "read_only": 1,
+   "no_copy": 1
+  },
+  {
+   "fieldname": "notification_status",
+   "fieldtype": "Select",
+   "label": "Notification Status",
+   "options": "Pending\nNotified\nOverdue",
+   "default": "Pending",
+   "read_only": 1,
+   "no_copy": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "notified_at",
+   "fieldtype": "Datetime",
+   "label": "Notified At",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sti_reference",
+   "fieldtype": "Data",
+   "label": "STI Reference",
+   "description": "SIRC / STC acknowledgement reference from the LTI branch, once notification has been made."
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-09-28 05:18:06.000000",
+ "modified_by": "Administrator",
+ "module": "Construction PH",
+ "name": "WAIR Incident",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "occurred_at",
+ "sort_order": "DESC",
+ "states": []
+}

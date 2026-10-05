@@ -1,0 +1,209 @@
+{% extends "templates/web.html" %}
+
+{% block title %}{{ project }}{% endblock %}
+
+{% block head_include %}
+<link rel="stylesheet" href="/assets/erpnext_construction_ph/css/construction_desk.css">
+{# `window.socketio_port`, exactly as `templates/base.html` sets it for Desk pages.
+
+   This page extends `templates/web.html`, NOT `base.html`, so it never got that
+   line -- and Frappe's realtime plugin builds its URL from the value. Measured on
+   the portal: `frappe.boot` exists but `socketio_port` is `undefined`, and the page
+   logged `Error connecting to socket.io: Unauthorized: TypeError: Failed to parse
+   URL from http://test.localhost:undefined/api/method/frappe.realtime.get_user_info`.
+   The port is literally the string "undefined" in the URL.
+
+   The value comes from the CONTEXT, not from `frappe` directly: a template that
+   reads a top-level name its controller does not assign is exactly what
+   `test_earned_value.test_template_only_reads_keys_the_context_assigns` exists to
+   catch, and it caught this line when it read `frappe` directly.
+   The portal does not USE realtime; this is here so the framework's URL is
+   well-formed rather than so the socket connects. #}
+<script>window.socketio_port = {{ socketio_port or 9000 }};</script>
+{% endblock %}
+
+{% block page_content %}
+<div class="portal-project-view">
+	<header class="portal-header">
+		<h1>{{ project }}</h1>
+		<p class="text-muted">{{ company }} &middot; Contract {{ "{:,.2f}".format(contract_amount) }}</p>
+	</header>
+
+	<section class="cpb-certification-summary">
+		<div class="card">
+			<span class="label">Billed to date</span>
+			<span class="value">{{ "{:,.2f}".format(totals.billed) }}</span>
+		</div>
+		<div class="card">
+			<span class="label">Retention held</span>
+			<span class="value">{{ "{:,.2f}".format(totals.retention) }}</span>
+		</div>
+		<div class="card">
+			<span class="label">CWT withheld</span>
+			<span class="value">{{ "{:,.2f}".format(totals.cwt) }}</span>
+		</div>
+		<div class="card">
+			<span class="label">VAT</span>
+			<span class="value">{{ "{:,.2f}".format(totals.vat) }}</span>
+		</div>
+		<div class="card">
+			<span class="label">Claims</span>
+			<span class="value">{{ totals.count }}</span>
+			<span class="label">{{ totals.billed_pct }}% of contract</span>
+		</div>
+	</section>
+
+	<section class="portal-bim" id="portal-bim">
+		<h2>Model</h2>
+		{% if not bim or not bim.available %}
+			{# Withheld. Says nothing about whether a model exists, so the page cannot
+			   be used to discover one. #}
+			<p class="text-muted">No model is shared with you for this project.</p>
+		{% else %}
+			<p class="text-muted">{{ bim.model.model_name }} &middot; {{ bim.model.lod_level }} &middot; read-only</p>
+			<div class="bim-surface" id="bim-surface"
+				data-project="{{ bim.model.project if bim.model.project is defined else '' }}"
+				data-model="{{ bim.model.name }}"
+				data-frag="{{ bim.model.frag_url or '' }}"></div>
+			{# NOT the Desk viewer. `public/js/bim/bim_viewer.js` calls
+			   `frappe.provide(...)` and takes a jQuery surface, so it is a **Desk**
+			   asset and cannot load on a `www` portal page, which is served without
+			   Desk's boot. What loads here instead is `public/js/portal/portal_bim.js`,
+			   a plain ES module that imports the SAME `geometry.js` the Desk uses --
+			   that engine guards its only `frappe` touch, so it exports `mount` and
+			   attaches nothing when there is no Desk host.
+
+			   The bytes come from `bim_frag.stream_frag`, not from `frag_url`: a
+			   `Construction Client` entitled to this very model gets **403** on
+			   `/private/files/...`, because Frappe's private-file authorisation wants
+			   READ on `File` and on the doctype it hangs off, and a client role has
+			   neither. That was FILE DELIVERY rather than WebGL -- measured, with a
+			   client authenticated and entitled to this project. #}
+			<p class="text-muted" id="bim-status">Loading geometry…</p>
+			<script type="module" src="/assets/erpnext_construction_ph/js/portal/portal_bim.js"></script>
+		{% endif %}
+
+		{# The clash LIST, which needs no geometry to be useful. Detecting clashes is
+		   delegated to the tool that produced the model -- that is the recorded
+		   reading of "delegate or build a BVH engine" -- so what the app owes the
+		   client is the issues themselves, not a viewer. This renders whether or not
+		   `bim.available` is true, because a model that has not finished converting can
+		   still have filed issues against it, and an empty list is a real answer. #}
+		{% if bim and bim.topics %}
+		<table class="table" id="portal-clash-list">
+			<thead>
+				<tr>
+					<th>Issue</th>
+					<th>Type</th>
+					<th>Status</th>
+					<th class="text-right">Camera</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for t in bim.topics %}
+				<tr>
+					<td>{{ t.title }}</td>
+					<td>{{ t.topic_type or "" }}</td>
+					<td>{{ t.status or "" }}</td>
+					<td class="text-right">{{ "yes" if t.camera_vectors else "no" }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		{% elif bim and bim.available %}
+		<p class="text-muted" id="portal-clash-empty">No coordination issues have been filed against this model.</p>
+		{% endif %}
+	</section>
+
+	<section class="portal-evm">
+		<h2>Schedule performance</h2>
+		{% if evm and evm.error %}
+			<p class="text-muted">Schedule performance is temporarily unavailable. Your billing figures below are unaffected.</p>
+		{% elif not evm or not evm.available %}
+			<p class="text-muted">No time-phased plan on record for this project yet.</p>
+		{% else %}
+		<p class="text-muted">As at {{ evm.as_at }} &middot; {{ evm.item_count }} priced item{{ "" if evm.item_count == 1 else "s" }} in the baseline</p>
+		<div class="card-row">
+			<div class="card">
+				<span class="label">Planned value</span>
+				<span class="value">{{ "{:,.2f}".format(evm.pv) }}</span>
+			</div>
+			<div class="card">
+				<span class="label">Earned value</span>
+				<span class="value">{{ "{:,.2f}".format(evm.ev) }}</span>
+			</div>
+			<div class="card">
+				<span class="label">Actual cost</span>
+				<span class="value">{{ "{:,.2f}".format(evm.ac) }}</span>
+			</div>
+			<div class="card">
+				<span class="label">SPI</span>
+				<span class="value">{{ evm.spi if evm.spi is not none else "n/a" }}</span>
+			</div>
+			<div class="card">
+				<span class="label">CPI</span>
+				<span class="value">{{ evm.cpi if evm.cpi is not none else "n/a" }}</span>
+			</div>
+		</div>
+		{% endif %}
+	</section>
+
+	<section class="portal-ledger">
+		<h2>Billing ledger</h2>
+		{% if not billings %}
+			<p class="text-muted">No submitted progress billings for this project yet.</p>
+		{% else %}
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Billing No.</th>
+					<th>Date</th>
+					<th class="text-right">Accomplishment</th>
+					<th class="text-right">VAT</th>
+					<th class="text-right">CWT</th>
+					<th class="text-right">Retention</th>
+					<th class="text-right">Net Due</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for b in billings %}
+				<tr>
+					<td>{{ b.billing_number }}</td>
+					<td>{{ b.posting_date }}</td>
+					<td class="text-right">{{ "{:,.2f}".format(b.gross_accomplishment_period) }}</td>
+					<td class="text-right">{{ "{:,.2f}".format(b.vat_amount) }}</td>
+					<td class="text-right">{{ "{:,.2f}".format(b.cwt_withheld) }}</td>
+					<td class="text-right">{{ "{:,.2f}".format(b.retention_amount) }}</td>
+					<td class="text-right">{{ "{:,.2f}".format(b.net_amount_due) }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		{% endif %}
+	</section>
+
+	{% if available_projects | length > 1 %}
+	<nav class="portal-switch">
+		<label for="project-switch">Project</label>
+		<select id="project-switch">
+			{% for p in available_projects %}
+			<option value="{{ p }}" {% if p == project %}selected{% endif %}>{{ p }}</option>
+			{% endfor %}
+		</select>
+	</nav>
+	{% endif %}
+</div>
+
+<script>
+	// Only ever navigates to a project the server already listed as permitted;
+	// the server re-checks regardless.
+	document.addEventListener("DOMContentLoaded", function () {
+		var sw = document.getElementById("project-switch");
+		if (sw) {
+			sw.addEventListener("change", function () {
+				window.location.href = "/portal/project-view?project=" + encodeURIComponent(sw.value);
+			});
+		}
+	});
+</script>
+{% endblock %}

@@ -1,0 +1,95 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-09-28 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "element_guid",
+  "element_type",
+  "element_name",
+  "ifc_id"
+ ],
+ "fields": [
+  {
+   "fieldname": "element_guid",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Element GUID",
+   "reqd": 1,
+   "description": "The IFC GlobalId, exactly as it appears in the IFC file. This is the join key Phase 3's viewer uses to turn a picked element back into a model entity, so it must be the file's own value and never a re-encoded or re-derived one."
+  },
+  {
+   "fieldname": "element_type",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Element Type",
+   "description": "IFC entity name, e.g. IFCWALL. Recorded so a lookup failure can say what was being looked for without re-reading the IFC."
+  },
+  {
+   "fieldname": "element_name",
+   "fieldtype": "Data",
+   "label": "Element Name"
+  },
+  {
+   "fieldname": "ifc_id",
+   "fieldtype": "Int",
+   "label": "IFC Step Id",
+   "description": "The `#N` instance number from the IFC DATA section, so a row can be traced back to the exact line it came from."
+  },
+  {
+   "fieldname": "drawing",
+   "fieldtype": "Data",
+   "label": "Drawing",
+   "description": "The sheet or drawing this element appears on. Part of the Element<->Drawing Map the split view's Sync Selection reads."
+  },
+  {
+   "fieldname": "drawing_page",
+   "fieldtype": "Int",
+   "label": "Drawing Page",
+   "description": "1-based page within the drawing, for multi-page PDFs."
+  },
+  {
+   "fieldname": "drawing_region",
+   "fieldtype": "Code",
+   "label": "Drawing Region",
+   "options": "x,y,w,h",
+   "description": "The element's bounding region on that page, in PDF user units. This is the edge the 2D viewport highlights, so it is stored rather than derived: the mapping is a DECISION made once, and recomputing it from a sheet nobody has calibrated would move the highlight every time the scale changed."
+  },
+  {
+   "fieldname": "mapped_area",
+   "fieldtype": "Float",
+   "label": "Mapped Area",
+   "description": "The area measured ON THE SHEET, in m2, for this region. This is the PDF side of the comparison. Deliberately NOT 'area': nothing in this app measures a per-element IFC area, and a field by that name would be read as one that does."
+  },
+  {
+   "fieldname": "geom_surface_area",
+   "fieldtype": "Float",
+   "label": "Geometry Surface Area (m2)",
+   "description": "Renamed from `surface_area`. The child table now carries THREE quantities that all read as 'area' -- `mapped_area` (the BOQ/quantity the coordinator typed against this element), `geom_surface_area` (true mesh surface, the sum of triangle areas) and `geom_footprint_area` (the XY bounding box). They are not interchangeable: for a 200x3000x200 wall the surface is ~2.5 m2 and the footprint ~0.06 m2. A QS reading `surface_area` next to `mapped_area` has no way to tell which is which, which is how a takeoff gets silently misread -- so the geometry-derived pair is prefixed.",
+   "modified": "2026-09-29 00:00:00.000000",
+   "nullable": 1
+  },
+  {
+   "fieldname": "geom_footprint_area",
+   "fieldtype": "Float",
+   "label": "Geometry Footprint Area (m2)",
+   "description": "Renamed from `footprint_area`. The child table now carries THREE quantities that all read as 'area' -- `mapped_area` (the BOQ/quantity the coordinator typed against this element), `geom_surface_area` (true mesh surface, the sum of triangle areas) and `geom_footprint_area` (the XY bounding box). They are not interchangeable: for a 200x3000x200 wall the surface is ~2.5 m2 and the footprint ~0.06 m2. A QS reading `surface_area` next to `mapped_area` has no way to tell which is which, which is how a takeoff gets silently misread -- so the geometry-derived pair is prefixed.",
+   "modified": "2026-09-29 00:00:00.000000",
+   "nullable": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-09-29 12:29:39.000000",
+ "modified_by": "Administrator",
+ "module": "Construction PH",
+ "name": "BIM Model GUID",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "istable": 1
+}

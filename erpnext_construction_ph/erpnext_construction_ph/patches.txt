@@ -1,0 +1,2 @@
+erpnext_construction_ph.patches.v0_1.normalize_bcf_topic_guids
+  erpnext_construction_ph.patches.v0_1.bcf_topic_notifications

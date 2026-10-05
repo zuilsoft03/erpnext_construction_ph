@@ -1,0 +1,167 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-09-28 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "log_number",
+  "project",
+  "log_date",
+  "location",
+  "logged_by",
+  "log_type",
+  "pour_section",
+  "pour_item",
+  "pour_volume",
+  "pour_unit",
+  "pour_task",
+  "stock_entry",
+  "weather_section",
+  "weather_condition",
+  "delay_hours",
+  "delay_reason",
+  "workforce_section",
+  "subcontractor",
+  "headcount",
+  "remarks"
+ ],
+ "fields": [
+  {
+   "fieldname": "log_number",
+   "fieldtype": "Data",
+   "label": "Log Number",
+   "reqd": 1,
+   "unique": 1,
+   "description": "Stable identifier for a site log. This is the key a field crew reads aloud over radio, so it must be short and must not be derived from a timestamp."
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Construction Project",
+   "reqd": 1
+  },
+  {
+   "fieldname": "log_date",
+   "fieldtype": "Datetime",
+   "label": "Log Date",
+   "reqd": 1,
+   "description": "When the entry was made in the field, not when it was typed up. A crew logging at 18:00 on site should not have to wait for the office to reconcile."
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Data",
+   "label": "Location",
+   "description": "Grid reference or area, e.g. 'Level 3 Grid C-F'."
+  },
+  {
+   "fieldname": "logged_by",
+   "fieldtype": "Link",
+   "label": "Logged By",
+   "options": "User"
+  },
+  {
+   "fieldname": "log_type",
+   "fieldtype": "Select",
+   "label": "Log Type",
+   "options": "Concrete Pour\nWeather Delay\nSubcontractor Headcount\nGeneral",
+   "default": "General",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "pour_section",
+   "fieldtype": "Section Break",
+   "label": "Concrete Pour"
+  },
+  {
+   "fieldname": "pour_item",
+   "fieldtype": "Link",
+   "label": "Concrete Item",
+   "options": "Item",
+   "description": "The Item consumed. Must match the item on the linked Stock Entry, or the two records describe different pours."
+  },
+  {
+   "fieldname": "pour_volume",
+   "fieldtype": "Float",
+   "label": "Pour Volume",
+   "description": "Volume placed. A non-zero volume with no pour_task is refused: an unlinked pour cannot be reconciled against the WBS."
+  },
+  {
+   "fieldname": "pour_unit",
+   "fieldtype": "Link",
+   "label": "Unit",
+   "options": "UOM"
+  },
+  {
+   "fieldname": "pour_task",
+   "fieldtype": "Link",
+   "label": "WBS Task",
+   "options": "Task",
+   "description": "The WBS task this pour delivers. The WBS Task is the join key for progress reporting, so a pour without one is invisible to the schedule."
+  },
+  {
+   "fieldname": "stock_entry",
+   "fieldtype": "Link",
+   "label": "Stock Entry",
+   "options": "Stock Entry",
+   "description": "The Material Issue that moved the concrete from the store to site. Reverse link, set by api/site_log when the entry is created."
+  },
+  {
+   "fieldname": "weather_section",
+   "fieldtype": "Section Break",
+   "label": "Weather Delay"
+  },
+  {
+   "fieldname": "weather_condition",
+   "fieldtype": "Select",
+   "label": "Weather",
+   "options": "\nClear\nRainy\nStormy\nExtreme Heat"
+  },
+  {
+   "fieldname": "delay_hours",
+   "fieldtype": "Float",
+   "label": "Delay Hours",
+   "description": "Hours lost to weather on this day. Claimable only with a reason recorded; an unexplained delay is not evidence of anything."
+  },
+  {
+   "fieldname": "delay_reason",
+   "fieldtype": "Small Text",
+   "label": "Delay Reason"
+  },
+  {
+   "fieldname": "workforce_section",
+   "fieldtype": "Section Break",
+   "label": "Subcontractor Headcount"
+  },
+  {
+   "fieldname": "subcontractor",
+   "fieldtype": "Link",
+   "label": "Subcontractor",
+   "options": "Construction Subcontractor Agreement"
+  },
+  {
+   "fieldname": "headcount",
+   "fieldtype": "Int",
+   "label": "Headcount"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-09-28 05:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Construction PH",
+ "name": "Construction Site Log",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "log_date",
+ "sort_order": "DESC",
+ "states": []
+}

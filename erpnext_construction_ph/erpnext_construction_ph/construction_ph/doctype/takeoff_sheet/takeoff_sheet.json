@@ -1,0 +1,155 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-09-28 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "sheet_name",
+  "project",
+  "boq",
+  "source_document",
+  "surveyor",
+  "survey_date",
+  "status",
+  "takeoff_items",
+  "remarks"
+ ],
+ "fields": [
+  {
+   "fieldname": "sheet_name",
+   "fieldtype": "Data",
+   "label": "Sheet Name",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Construction Project",
+   "reqd": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "boq",
+   "fieldtype": "Link",
+   "label": "Bill of Quantities",
+   "options": "Construction BOQ",
+   "reqd": 1
+  },
+  {
+   "fieldname": "source_document",
+   "fieldtype": "Attach",
+   "label": "Source Document",
+   "options": "File",
+   "description": "Scanned plan or PDF takeoff input."
+  },
+  {
+   "fieldname": "surveyor",
+   "fieldtype": "Link",
+   "label": "Surveyor",
+   "options": "User"
+  },
+  {
+   "fieldname": "survey_date",
+   "fieldtype": "Date",
+   "label": "Survey Date",
+   "default": "Today"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "\nDraft\nReviewed\nApproved",
+   "default": "Draft"
+  },
+  {
+   "fieldname": "takeoff_items",
+   "fieldtype": "Table",
+   "label": "Takeoff Items",
+   "options": "Construction BOQ Item",
+   "description": "Quantity is locked once the BOQ item is linked."
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 0,
+ "links": [],
+ "modified": "2026-09-28 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Construction PH",
+ "name": "Takeoff Sheet",
+ "name_case": "Title Case",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "report": 1,
+   "write": 1,
+   "create": 1,
+   "submit": 1,
+   "delete": 1
+  },
+  {
+   "role": "Construction Estimator",
+   "read": 1,
+   "report": 1,
+   "write": 1,
+   "create": 1,
+   "submit": 1
+  },
+  {
+   "role": "Construction Site Manager",
+   "read": 1,
+   "report": 1,
+   "write": 1
+  },
+  {
+   "role": "Construction BIM Coordinator",
+   "read": 1,
+   "report": 1
+  },
+  {
+   "role": "Construction Buyer",
+   "read": 1,
+   "report": 1
+  },
+  {
+   "role": "Construction Contract Administrator",
+   "read": 1,
+   "report": 1
+  },
+  {
+   "role": "Construction Design Lead",
+   "read": 1,
+   "report": 1
+  },
+  {
+   "role": "Construction Field Foreman",
+   "read": 1,
+   "report": 1
+  },
+  {
+   "role": "Construction Planner",
+   "read": 1,
+   "report": 1
+  },
+  {
+   "role": "Construction Site Manager",
+   "read": 1,
+   "report": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "autoname": "field:sheet_name",
+ "title_field": "sheet_name"
+}

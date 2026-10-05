@@ -1,0 +1,174 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-09-28 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "boq_number",
+  "project",
+  "boq_date",
+  "currency",
+  "status",
+  "total_amount",
+  "approved_by",
+  "approved_on",
+  "frozen_on",
+  "remarks",
+  "boq_items"
+ ],
+ "fields": [
+  {
+   "fieldname": "boq_number",
+   "fieldtype": "Data",
+   "label": "BOQ Number",
+   "reqd": 1,
+   "unique": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Construction Project",
+   "reqd": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "boq_date",
+   "fieldtype": "Date",
+   "label": "BOQ Date",
+   "reqd": 1,
+   "default": "Today"
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency",
+   "default": "PHP"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Draft\nApproved\nFrozen",
+   "default": "Draft",
+   "in_standard_filter": 1,
+   "description": "Draft -> Approved -> Frozen. Rows are editable only while Draft."
+  },
+  {
+   "fieldname": "total_amount",
+   "fieldtype": "Currency",
+   "label": "Total Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "approved_by",
+   "fieldtype": "Link",
+   "label": "Approved By",
+   "options": "User"
+  },
+  {
+   "fieldname": "approved_on",
+   "fieldtype": "Datetime",
+   "label": "Approved On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "frozen_on",
+   "fieldtype": "Datetime",
+   "label": "Frozen On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "boq_items",
+   "fieldtype": "Table",
+   "label": "BOQ Items",
+   "options": "Construction BOQ Item",
+   "description": "unit_price = direct_cost x (1 + OCM + profit). Deliberately NOT mandatory: the BOQ Worksheet creates an empty BOQ and then fills it from a pasted Excel range (api/boq_matrix.bulk_insert_boq_items), so an empty shell has to be saveable."
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 0,
+ "links": [],
+ "modified": "2026-09-28 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Construction PH",
+ "name": "Construction BOQ",
+ "name_case": "Title Case",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "report": 1,
+   "write": 1,
+   "create": 1,
+   "submit": 1,
+   "delete": 1
+  },
+  {
+   "role": "Construction Project Manager",
+   "read": 1,
+   "report": 1,
+   "write": 1,
+   "create": 1,
+   "submit": 1
+  },
+  {
+   "role": "Construction Estimator",
+   "read": 1,
+   "report": 1,
+   "write": 1,
+   "create": 1
+  },
+  {
+   "role": "Construction BIM Coordinator",
+   "read": 1,
+   "report": 1
+  },
+  {
+   "role": "Construction Buyer",
+   "read": 1,
+   "report": 1
+  },
+  {
+   "role": "Construction Contract Administrator",
+   "read": 1,
+   "report": 1
+  },
+  {
+   "role": "Construction Design Lead",
+   "read": 1,
+   "report": 1
+  },
+  {
+   "role": "Construction Field Foreman",
+   "read": 1,
+   "report": 1
+  },
+  {
+   "role": "Construction Planner",
+   "read": 1,
+   "report": 1
+  },
+  {
+   "role": "Construction Site Manager",
+   "read": 1,
+   "report": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "autoname": "field:boq_number",
+ "title_field": "boq_number",
+ "boq_items_options": "Construction BOQ Item"
+}

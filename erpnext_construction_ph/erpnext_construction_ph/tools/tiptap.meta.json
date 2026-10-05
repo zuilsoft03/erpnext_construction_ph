@@ -1,0 +1,888 @@
+{
+  "inputs": {
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/orderedmap/dist/index.js": {
+      "bytes": 4433,
+      "imports": [],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-model/dist/index.js": {
+      "bytes": 124855,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/orderedmap/dist/index.js",
+          "kind": "import-statement",
+          "original": "orderedmap"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-transform/dist/index.js": {
+      "bytes": 84671,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-model/dist/index.js",
+          "kind": "import-statement",
+          "original": "prosemirror-model"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-state/dist/index.js": {
+      "bytes": 36285,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-model/dist/index.js",
+          "kind": "import-statement",
+          "original": "prosemirror-model"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-transform/dist/index.js",
+          "kind": "import-statement",
+          "original": "prosemirror-transform"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/pm/state/dist/index.js": {
+      "bytes": 53,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-state/dist/index.js",
+          "kind": "import-statement",
+          "original": "prosemirror-state"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-view/dist/index.js": {
+      "bytes": 248851,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-state/dist/index.js",
+          "kind": "import-statement",
+          "original": "prosemirror-state"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-model/dist/index.js",
+          "kind": "import-statement",
+          "original": "prosemirror-model"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-transform/dist/index.js",
+          "kind": "import-statement",
+          "original": "prosemirror-transform"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/pm/view/dist/index.js": {
+      "bytes": 51,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-view/dist/index.js",
+          "kind": "import-statement",
+          "original": "prosemirror-view"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/w3c-keyname/index.js": {
+      "bytes": 2630,
+      "imports": [],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-keymap/dist/index.js": {
+      "bytes": 4909,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/w3c-keyname/index.js",
+          "kind": "import-statement",
+          "original": "w3c-keyname"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-state/dist/index.js",
+          "kind": "import-statement",
+          "original": "prosemirror-state"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/pm/keymap/dist/index.js": {
+      "bytes": 55,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-keymap/dist/index.js",
+          "kind": "import-statement",
+          "original": "prosemirror-keymap"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/pm/model/dist/index.js": {
+      "bytes": 53,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-model/dist/index.js",
+          "kind": "import-statement",
+          "original": "prosemirror-model"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/pm/transform/dist/index.js": {
+      "bytes": 61,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-transform/dist/index.js",
+          "kind": "import-statement",
+          "original": "prosemirror-transform"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-commands/dist/index.js": {
+      "bytes": 34656,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-transform/dist/index.js",
+          "kind": "import-statement",
+          "original": "prosemirror-transform"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-model/dist/index.js",
+          "kind": "import-statement",
+          "original": "prosemirror-model"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-state/dist/index.js",
+          "kind": "import-statement",
+          "original": "prosemirror-state"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/pm/commands/dist/index.js": {
+      "bytes": 59,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-commands/dist/index.js",
+          "kind": "import-statement",
+          "original": "prosemirror-commands"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-schema-list/dist/index.js": {
+      "bytes": 13076,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-transform/dist/index.js",
+          "kind": "import-statement",
+          "original": "prosemirror-transform"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-model/dist/index.js",
+          "kind": "import-statement",
+          "original": "prosemirror-model"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-state/dist/index.js",
+          "kind": "import-statement",
+          "original": "prosemirror-state"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/pm/schema-list/dist/index.js": {
+      "bytes": 65,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-schema-list/dist/index.js",
+          "kind": "import-statement",
+          "original": "prosemirror-schema-list"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/core/dist/index.js": {
+      "bytes": 199137,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/pm/state/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/pm/state"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/pm/view/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/pm/view"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/pm/keymap/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/pm/keymap"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/pm/model/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/pm/model"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/pm/transform/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/pm/transform"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/pm/commands/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/pm/commands"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/pm/schema-list/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/pm/schema-list"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-blockquote/dist/index.js": {
+      "bytes": 1524,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/core/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/core"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-bold/dist/index.js": {
+      "bytes": 2830,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/core/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/core"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-bullet-list/dist/index.js": {
+      "bytes": 2359,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/core/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/core"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-code/dist/index.js": {
+      "bytes": 2105,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/core/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/core"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-code-block/dist/index.js": {
+      "bytes": 8627,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/core/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/core"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/pm/state/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/pm/state"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-document/dist/index.js": {
+      "bytes": 343,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/core/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/core"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-dropcursor/dist/index.js": {
+      "bytes": 6798,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-state/dist/index.js",
+          "kind": "import-statement",
+          "original": "prosemirror-state"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-transform/dist/index.js",
+          "kind": "import-statement",
+          "original": "prosemirror-transform"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/pm/dropcursor/dist/index.js": {
+      "bytes": 63,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-dropcursor/dist/index.js",
+          "kind": "import-statement",
+          "original": "prosemirror-dropcursor"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-dropcursor/dist/index.js": {
+      "bytes": 704,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/core/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/core"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/pm/dropcursor/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/pm/dropcursor"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-gapcursor/dist/index.js": {
+      "bytes": 8620,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-keymap/dist/index.js",
+          "kind": "import-statement",
+          "original": "prosemirror-keymap"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-state/dist/index.js",
+          "kind": "import-statement",
+          "original": "prosemirror-state"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-model/dist/index.js",
+          "kind": "import-statement",
+          "original": "prosemirror-model"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-view/dist/index.js",
+          "kind": "import-statement",
+          "original": "prosemirror-view"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/pm/gapcursor/dist/index.js": {
+      "bytes": 61,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-gapcursor/dist/index.js",
+          "kind": "import-statement",
+          "original": "prosemirror-gapcursor"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-gapcursor/dist/index.js": {
+      "bytes": 992,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/core/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/core"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/pm/gapcursor/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/pm/gapcursor"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-hard-break/dist/index.js": {
+      "bytes": 2364,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/core/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/core"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-heading/dist/index.js": {
+      "bytes": 2351,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/core/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/core"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/rope-sequence/dist/index.js": {
+      "bytes": 7310,
+      "imports": [],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-history/dist/index.js": {
+      "bytes": 18445,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/rope-sequence/dist/index.js",
+          "kind": "import-statement",
+          "original": "rope-sequence"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-transform/dist/index.js",
+          "kind": "import-statement",
+          "original": "prosemirror-transform"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-state/dist/index.js",
+          "kind": "import-statement",
+          "original": "prosemirror-state"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/pm/history/dist/index.js": {
+      "bytes": 57,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-history/dist/index.js",
+          "kind": "import-statement",
+          "original": "prosemirror-history"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-history/dist/index.js": {
+      "bytes": 1511,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/core/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/core"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/pm/history/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/pm/history"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-horizontal-rule/dist/index.js": {
+      "bytes": 3627,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/core/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/core"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/pm/state/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/pm/state"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-italic/dist/index.js": {
+      "bytes": 2756,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/core/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/core"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-list-item/dist/index.js": {
+      "bytes": 1055,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/core/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/core"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-ordered-list/dist/index.js": {
+      "bytes": 3366,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/core/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/core"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-paragraph/dist/index.js": {
+      "bytes": 969,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/core/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/core"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-strike/dist/index.js": {
+      "bytes": 2097,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/core/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/core"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-text/dist/index.js": {
+      "bytes": 282,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/core/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/core"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/starter-kit/dist/index.js": {
+      "bytes": 3740,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/core/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/core"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-blockquote/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/extension-blockquote"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-bold/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/extension-bold"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-bullet-list/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/extension-bullet-list"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-code/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/extension-code"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-code-block/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/extension-code-block"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-document/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/extension-document"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-dropcursor/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/extension-dropcursor"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-gapcursor/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/extension-gapcursor"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-hard-break/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/extension-hard-break"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-heading/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/extension-heading"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-history/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/extension-history"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-horizontal-rule/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/extension-horizontal-rule"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-italic/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/extension-italic"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-list-item/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/extension-list-item"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-ordered-list/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/extension-ordered-list"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-paragraph/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/extension-paragraph"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-strike/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/extension-strike"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-text/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/extension-text"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-underline/dist/index.js": {
+      "bytes": 1436,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/core/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/core"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/linkifyjs/dist/linkify.mjs": {
+      "bytes": 63515,
+      "imports": [],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-link/dist/index.js": {
+      "bytes": 17008,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/core/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/core"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/linkifyjs/dist/linkify.mjs",
+          "kind": "import-statement",
+          "original": "linkifyjs"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/pm/state/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/pm/state"
+        }
+      ],
+      "format": "esm"
+    },
+    "apps/erpnext_construction_ph/erpnext_construction_ph/tools/tiptap_bundle_entry.js": {
+      "bytes": 1142,
+      "imports": [
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/core/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/core"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/starter-kit/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/starter-kit"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-underline/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/extension-underline"
+        },
+        {
+          "path": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-link/dist/index.js",
+          "kind": "import-statement",
+          "original": "@tiptap/extension-link"
+        }
+      ],
+      "format": "esm"
+    }
+  },
+  "outputs": {
+    "apps/erpnext_construction_ph/erpnext_construction_ph/public/js/editor/tiptap.bundle.js": {
+      "imports": [],
+      "exports": [],
+      "entryPoint": "apps/erpnext_construction_ph/erpnext_construction_ph/tools/tiptap_bundle_entry.js",
+      "inputs": {
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/orderedmap/dist/index.js": {
+          "bytesInOutput": 1456
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-model/dist/index.js": {
+          "bytesInOutput": 44879
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-transform/dist/index.js": {
+          "bytesInOutput": 31351
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-state/dist/index.js": {
+          "bytesInOutput": 11852
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/pm/state/dist/index.js": {
+          "bytesInOutput": 0
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-view/dist/index.js": {
+          "bytesInOutput": 98003
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/pm/view/dist/index.js": {
+          "bytesInOutput": 0
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/w3c-keyname/index.js": {
+          "bytesInOutput": 1495
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-keymap/dist/index.js": {
+          "bytesInOutput": 1215
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/pm/keymap/dist/index.js": {
+          "bytesInOutput": 0
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/pm/model/dist/index.js": {
+          "bytesInOutput": 0
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/pm/transform/dist/index.js": {
+          "bytesInOutput": 0
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-commands/dist/index.js": {
+          "bytesInOutput": 9516
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/pm/commands/dist/index.js": {
+          "bytesInOutput": 0
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-schema-list/dist/index.js": {
+          "bytesInOutput": 2628
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/pm/schema-list/dist/index.js": {
+          "bytesInOutput": 0
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/core/dist/index.js": {
+          "bytesInOutput": 61611
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-blockquote/dist/index.js": {
+          "bytesInOutput": 598
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-bold/dist/index.js": {
+          "bytesInOutput": 1075
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-bullet-list/dist/index.js": {
+          "bytesInOutput": 1045
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-code/dist/index.js": {
+          "bytesInOutput": 644
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-code-block/dist/index.js": {
+          "bytesInOutput": 2668
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-document/dist/index.js": {
+          "bytesInOutput": 58
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-dropcursor/dist/index.js": {
+          "bytesInOutput": 3249
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/pm/dropcursor/dist/index.js": {
+          "bytesInOutput": 0
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-dropcursor/dist/index.js": {
+          "bytesInOutput": 151
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-gapcursor/dist/index.js": {
+          "bytesInOutput": 3549
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/pm/gapcursor/dist/index.js": {
+          "bytesInOutput": 0
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-gapcursor/dist/index.js": {
+          "bytesInOutput": 237
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-hard-break/dist/index.js": {
+          "bytesInOutput": 906
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-heading/dist/index.js": {
+          "bytesInOutput": 984
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/rope-sequence/dist/index.js": {
+          "bytesInOutput": 3398
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/prosemirror-history/dist/index.js": {
+          "bytesInOutput": 5757
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/pm/history/dist/index.js": {
+          "bytesInOutput": 0
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-history/dist/index.js": {
+          "bytesInOutput": 493
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-horizontal-rule/dist/index.js": {
+          "bytesInOutput": 1058
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-italic/dist/index.js": {
+          "bytesInOutput": 1008
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-list-item/dist/index.js": {
+          "bytesInOutput": 494
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-ordered-list/dist/index.js": {
+          "bytesInOutput": 1456
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-paragraph/dist/index.js": {
+          "bytesInOutput": 392
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-strike/dist/index.js": {
+          "bytesInOutput": 775
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-text/dist/index.js": {
+          "bytesInOutput": 46
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/starter-kit/dist/index.js": {
+          "bytesInOutput": 1370
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-underline/dist/index.js": {
+          "bytesInOutput": 597
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/linkifyjs/dist/linkify.mjs": {
+          "bytesInOutput": 19595
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/@tiptap/extension-link/dist/index.js": {
+          "bytesInOutput": 5486
+        },
+        "apps/erpnext_construction_ph/erpnext_construction_ph/tools/tiptap_bundle_entry.js": {
+          "bytesInOutput": 61
+        }
+      },
+      "bytes": 321168
+    }
+  }
+}

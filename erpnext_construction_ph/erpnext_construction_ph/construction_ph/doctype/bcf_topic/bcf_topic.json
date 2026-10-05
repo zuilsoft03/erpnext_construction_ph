@@ -1,0 +1,199 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-09-28 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "topic_guid",
+  "title",
+  "project",
+  "bim_model",
+  "status",
+  "topic_type",
+  "priority",
+  "due_date",
+  "assigned_to",
+  "resolution",
+  "creation_author",
+  "modified_by_label",
+  "camera_vectors",
+  "viewpoints",
+  "elements",
+  "task"
+ ],
+ "fields": [
+  {
+   "fieldname": "topic_guid",
+   "fieldtype": "Data",
+   "label": "Topic GUID",
+   "unique": 1,
+   "description": "UUID v4. Populated by the BCF controller when the topic row lands; the skeleton ships it as a plain unique field so the doctype can be created before that controller exists."
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "label": "Title",
+   "reqd": 1
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Construction Project",
+   "reqd": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "bim_model",
+   "fieldtype": "Link",
+   "label": "BIM Model",
+   "options": "BIM Model",
+   "reqd": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "\nOpen\nIn Progress\nIn Review\nResolved\nClosed\nRejected",
+   "default": "Open",
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "topic_type",
+   "fieldtype": "Select",
+   "label": "Topic Type",
+   "options": "\nClash\nDesign Issue\nRFI\nSafety\nCoordination\nGeneral",
+   "description": "Roadmap BIM-03. Note `discipline` is NOT here: it is roadmap BIM-05's first task and travels with the deferred clash work (plan §6)."
+  },
+  {
+   "fieldname": "due_date",
+   "fieldtype": "Date",
+   "label": "Due Date"
+  },
+  {
+   "fieldname": "resolution",
+   "fieldtype": "Small Text",
+   "label": "Resolution",
+   "description": "Required before a topic may be Closed. Enforced by `bcf_topic.py::guard_close_requires_resolution`, not only by the UI."
+  },
+  {
+   "fieldname": "creation_author",
+   "fieldtype": "Data",
+   "label": "Creation Author",
+   "description": "Display name of the person who raised the issue. Distinct from `owner`, which stores an account id/email."
+  },
+  {
+   "fieldname": "modified_by_label",
+   "fieldtype": "Data",
+   "label": "Last Modified By",
+   "description": "Display name of the last person to change this topic. Distinct from the standard `modified_by`, which stores an account id/email."
+  },
+  {
+   "fieldname": "priority",
+   "fieldtype": "Select",
+   "label": "Priority",
+   "options": "\nLow\nNormal\nHigh",
+   "default": "Normal"
+  },
+  {
+   "fieldname": "assigned_to",
+   "fieldtype": "Link",
+   "label": "Assigned To",
+   "options": "User"
+  },
+  {
+   "fieldname": "camera_vectors",
+   "fieldtype": "Code",
+   "label": "Camera Vectors",
+   "options": "JSON",
+   "description": "Camera position/orientation as JSON."
+  },
+  {
+   "fieldname": "viewpoints",
+   "fieldtype": "Table",
+   "label": "Viewpoints",
+   "options": "BCF Viewpoint"
+  },
+  {
+   "fieldname": "elements",
+   "fieldtype": "Table",
+   "label": "Elements",
+   "options": "BCF Element Reference"
+  },
+  {
+   "fieldname": "task",
+   "fieldtype": "Link",
+   "label": "WBS Task",
+   "options": "Task",
+   "description": "The WBS task this issue is raised against. It is the join key that makes the camera jump bidirectional: a Task returns its BCF topics' viewpoints, and a topic returns its task."
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 0,
+ "links": [],
+ "modified": "2026-09-28 07:53:19.000000",
+ "modified_by": "Administrator",
+ "module": "Construction PH",
+ "name": "BCF Topic",
+ "name_case": "Title Case",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "report": 1,
+   "write": 1,
+   "create": 1,
+   "submit": 0,
+   "delete": 1
+  },
+  {
+   "role": "Construction BIM Coordinator",
+   "read": 1,
+   "report": 1,
+   "write": 1,
+   "create": 1,
+   "submit": 0
+  },
+  {
+   "role": "Construction Buyer",
+   "read": 1,
+   "report": 1
+  },
+  {
+   "role": "Construction Contract Administrator",
+   "read": 1,
+   "report": 1
+  },
+  {
+   "role": "Construction Design Lead",
+   "read": 1,
+   "report": 1
+  },
+  {
+   "role": "Construction Field Foreman",
+   "read": 1,
+   "report": 1
+  },
+  {
+   "role": "Construction Planner",
+   "read": 1,
+   "report": 1
+  },
+  {
+   "role": "Construction Site Manager",
+   "read": 1,
+   "report": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "autoname": "hash",
+ "title_field": "title",
+ "allow_comments": 1,
+ "_comments": 1,
+ "_comment_flag_note": "`_comments` is the flag this Frappe version reads; `allow_comments` is what the roadmap names and is kept for the reader who follows the document. Measured: tabDocType has no allow_comments column and document.py never mentions it."
+}

@@ -1,0 +1,23 @@
+{
+ "content": null,
+ "creation": "2026-09-28 00:00:00.000000",
+ "docstatus": 0,
+ "doctype": "Page",
+ "idx": 0,
+ "modified": "2026-09-28 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Construction PH",
+ "name": "site_log",
+ "owner": "Administrator",
+ "page_name": "site_log",
+ "roles": [
+  {"role": "System Manager"},
+  {"role": "Construction Project Manager"},
+  {"role": "Construction Site Manager"}
+ ],
+ "script": null,
+ "standard": "Yes",
+ "style": null,
+ "system_page": 0,
+ "title": "Site Log"
+}

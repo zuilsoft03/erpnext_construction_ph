@@ -1,0 +1,20 @@
+[project]
+name = "erpnext_construction_ph"
+version = "0.0.1"
+description = "Philippine Construction ERPNext Custom App with BIM, Multi-Takeoff, CIAP 102, and BIR 2307 Compliance"
+authors = [
+    { name = "Philippine AEC Engineering", email = "engineering@construction.ph" }
+]
+dependencies = [
+    "frappe",
+    "erpnext",
+    "ezdxf>=1.1.0",
+    "python-docx>=1.1.0",
+    "openpyxl>=3.1.0"
+]
+readme = "README.md"
+requires-python = ">=3.10"
+
+[build-system]
+requires = ["flit_core >=3.4,<4"]
+build-backend = "flit_core.buildapi"

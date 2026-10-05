@@ -1,0 +1,28 @@
+{
+ "doctype": "Notification",
+ "name": "BCF Topic Status Changed",
+ "channel": "Email",
+ "subject": "{{ doc.title }} is now {{ doc.status }}",
+ "condition": "doc.status",
+ "document_type": "BCF Topic",
+ "event": "Value Change",
+ "value_changed": "status",
+ "enabled": 1,
+ "is_standard": 0,
+ "creation": "2026-09-29 00:00:00.000000",
+ "modified": "2026-09-29 00:00:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator",
+ "module": "Construction PH",
+ "message": "<p>The BCF topic <b>{{ doc.title }}</b> is now <b>{{ doc.status }}</b>.</p>{% if doc.resolution %}<p>Resolution: {{ doc.resolution }}</p>{% endif %}<p><a href=\"{{ frappe.utils.get_url(doc) }}\">Open the topic</a></p>",
+ "recipients": [
+  {
+   "receiver_by_document_field": "assigned_to"
+  },
+  {
+   "receiver_by_document_field": "creation_author"
+  }
+ ],
+ "send_system_notification": 1,
+ "send_email_notification": 1
+}

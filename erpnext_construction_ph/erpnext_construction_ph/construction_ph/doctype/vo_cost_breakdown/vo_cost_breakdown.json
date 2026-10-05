@@ -1,0 +1,75 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-09-28 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "component",
+  "basis",
+  "quantity",
+  "uom",
+  "rate",
+  "amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "component",
+   "fieldtype": "Select",
+   "label": "Component",
+   "options": "Labor\nMaterial\nEquipment",
+   "reqd": 1,
+   "in_list_view": 1,
+   "description": "Which part of the DUPA build-up this line is. Additive per D-028: the three components sum, and OCM, profit and VAT are applied to that sum."
+  },
+  {
+   "fieldname": "basis",
+   "fieldtype": "Small Text",
+   "label": "Basis",
+   "description": "Where this quantity and rate came from -- a DPWH schedule item, a measured quantity, a quotation. A reviewer asking 'where did this come from' should get an answer per line, not one unexplained total."
+  },
+  {
+   "fieldname": "quantity",
+   "fieldtype": "Float",
+   "label": "Quantity",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "uom",
+   "fieldtype": "Link",
+   "label": "UOM",
+   "options": "UOM"
+  },
+  {
+   "fieldname": "rate",
+   "fieldtype": "Currency",
+   "label": "Rate",
+   "options": "Company:company:default_currency",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "label": "Amount",
+   "options": "Company:company:default_currency",
+   "read_only": 1,
+   "in_list_view": 1,
+   "description": "quantity x rate, computed on the parent so every line is derived the same way rather than typed."
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-09-28 06:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Construction PH",
+ "name": "VO Cost Breakdown",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "istable": 1
+}

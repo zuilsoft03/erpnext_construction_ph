@@ -1,0 +1,68 @@
+{
+  "inputs": {
+    "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/pdfjs-dist/build/pdf.mjs": {
+      "bytes": 658371,
+      "imports": [],
+      "format": "esm"
+    }
+  },
+  "outputs": {
+    "apps/erpnext_construction_ph/erpnext_construction_ph/public/js/bim/vendor/pdf/pdf.js": {
+      "imports": [],
+      "exports": [
+        "AbortException",
+        "AnnotationEditorLayer",
+        "AnnotationEditorParamsType",
+        "AnnotationEditorType",
+        "AnnotationEditorUIManager",
+        "AnnotationLayer",
+        "AnnotationMode",
+        "ColorPicker",
+        "DOMSVGFactory",
+        "DrawLayer",
+        "FeatureTest",
+        "GlobalWorkerOptions",
+        "ImageKind",
+        "InvalidPDFException",
+        "MissingPDFException",
+        "OPS",
+        "OutputScale",
+        "PDFDataRangeTransport",
+        "PDFDateString",
+        "PDFWorker",
+        "PasswordResponses",
+        "PermissionFlag",
+        "PixelsPerInch",
+        "RenderingCancelledException",
+        "TextLayer",
+        "TouchManager",
+        "UnexpectedResponseException",
+        "Util",
+        "VerbosityLevel",
+        "XfaLayer",
+        "build",
+        "createValidAbsoluteUrl",
+        "fetchData",
+        "getDocument",
+        "getFilenameFromUrl",
+        "getPdfFilenameFromUrl",
+        "getXfaPageViewport",
+        "isDataScheme",
+        "isPdfFile",
+        "noContextMenu",
+        "normalizeUnicode",
+        "setLayerDimensions",
+        "shadow",
+        "stopEvent",
+        "version"
+      ],
+      "entryPoint": "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/pdfjs-dist/build/pdf.mjs",
+      "inputs": {
+        "apps/erpnext_construction_ph/erpnext_construction_ph/node_modules/pdfjs-dist/build/pdf.mjs": {
+          "bytesInOutput": 330277
+        }
+      },
+      "bytes": 331242
+    }
+  }
+}

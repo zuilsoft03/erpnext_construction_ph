@@ -1,0 +1,157 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-09-28 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "model_name",
+  "project",
+  "source_file",
+  "frag_url",
+  "conversion_status",
+  "lod_level",
+  "file_size_bytes",
+  "converted_on",
+  "remarks",
+  "model_guids"
+ ],
+ "fields": [
+  {
+   "fieldname": "model_name",
+   "fieldtype": "Data",
+   "label": "Model Name",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Construction Project",
+   "reqd": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "source_file",
+   "fieldtype": "Attach",
+   "label": "Source File",
+   "options": "File",
+   "description": "Original IFC upload."
+  },
+  {
+   "fieldname": "frag_url",
+   "fieldtype": "Data",
+   "label": "Converted .frag URL",
+   "read_only": 1,
+   "description": "S3 URL of the converted .frag model. Never inline geometry."
+  },
+  {
+   "fieldname": "conversion_status",
+   "fieldtype": "Select",
+   "label": "Conversion Status",
+   "options": "\nPending\nQueued\nConverting\nReady\nStale\nFailed",
+   "default": "Pending",
+   "in_standard_filter": 1,
+   "description": "Stale means a conversion finished once and its cached .frag is no longer on disk -- a restored site, or a cache eviction. It is deliberately distinct from Ready: the model WAS converted, and saying Pending would send a user to convert a file that may not exist, while saying Ready offers a model the viewer cannot load."
+  },
+  {
+   "fieldname": "lod_level",
+   "fieldtype": "Select",
+   "label": "LOD Level",
+   "options": "\nLOD100\nLOD200\nLOD300\nLOD350\nLOD400"
+  },
+  {
+   "fieldname": "file_size_bytes",
+   "fieldtype": "Int",
+   "label": "File Size (bytes)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "converted_on",
+   "fieldtype": "Datetime",
+   "label": "Converted On",
+   "read_only": 1
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "model_guids",
+   "fieldtype": "Table",
+   "label": "Model GUIDs",
+   "options": "BIM Model GUID",
+   "description": "IFC GlobalIds indexed from the source file. Identifiers only -- geometry lives in object storage and never in this table."
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 0,
+ "links": [],
+ "modified": "2026-09-28 04:39:06.000000",
+ "modified_by": "Administrator",
+ "module": "Construction PH",
+ "name": "BIM Model",
+ "name_case": "Title Case",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "report": 1,
+   "write": 1,
+   "create": 1,
+   "submit": 1,
+   "delete": 1
+  },
+  {
+   "role": "Construction BIM Coordinator",
+   "read": 1,
+   "report": 1,
+   "write": 1,
+   "create": 1
+  },
+  {
+   "role": "Construction BIM Coordinator",
+   "read": 1,
+   "report": 1
+  },
+  {
+   "role": "Construction Buyer",
+   "read": 1,
+   "report": 1
+  },
+  {
+   "role": "Construction Contract Administrator",
+   "read": 1,
+   "report": 1
+  },
+  {
+   "role": "Construction Design Lead",
+   "read": 1,
+   "report": 1
+  },
+  {
+   "role": "Construction Field Foreman",
+   "read": 1,
+   "report": 1
+  },
+  {
+   "role": "Construction Planner",
+   "read": 1,
+   "report": 1
+  },
+  {
+   "role": "Construction Site Manager",
+   "read": 1,
+   "report": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "autoname": "field:model_name",
+ "title_field": "model_name"
+}

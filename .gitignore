@@ -1,0 +1,165 @@
+# .gitignore — erpnext_construction_ph
+
+# Python bytecode (stale .pyc can shadow source edits — see ARCHITECTURE.md §Reliability)
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Frappe build artifacts
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# intproject operational temp dirs (never commit gate evidence to repo)
+# Temp dirs are scratch, but the `check.txt` inside them is NOT: AGENTS.md's
+# close protocol requires `ops/tmp-<id>/check.txt` and GATES.md cites those
+# paths as the authoritative evidence for every closed row. Excluding the
+# whole directory meant a fresh clone had no evidence for any row while
+# the gates still pointed at it. Exclude the contents, then re-include the
+# evidence -- a negation cannot reach inside an excluded *directory*.
+ops/tmp-*/*
+!ops/tmp-*/check.txt
+# A gate's CHECK may also NAME a script it runs (PH3-02: `node
+# ops/tmp-ph3-02/geometry_check.mjs`). The line above re-includes evidence; this
+# re-includes the runners, for the same reason: a gate that points at a file git
+# ignores cannot be run from a fresh clone, so the row's own acceptance criterion
+# is unrunnable by anyone but the session that wrote it.
+#
+# This was ONCE a per-file exception (`!ops/tmp-*/geometry_check.mjs` and one
+# orphan probe), on the reasoning that a blanket exception would commit junk. The
+# cost of that reasoning showed up in a single session: SEVEN gate scripts were
+# authored and named by a CHECK line, and all seven stayed ignored, so every one of
+# those gates was runnable only by the session that wrote it. A per-file exception
+# makes "add a gate" and "make the gate runnable" two separate steps, and the second
+# one gets forgotten -- which is the same defect as an ungated CHECK command, just
+# quieter.
+#
+# So the shape is negated rather than the names. A row directory is an evidence
+# directory: anything in it that a gate names must be runnable, and the real throwaway
+# scratch is outside them.
+!ops/tmp-*/*.py
+!ops/tmp-*/*.mjs
+# ...and the SHELL gates, which is where the gap was. The two lines above were written
+# when the gates happened to be `.py` and `.mjs`, and `.sh` was not added -- so ELEVEN
+# DONE rows (CORE-20, 21, 23, 24, 25, 26, 27, 29, 30, 31, 32) named a `.sh` gate that git
+# ignored. Found by trying to commit a fix to CORE-30's gate and being told there was
+# nothing to commit: the edit was real, the file was simply not tracked.
+#
+# The cost of a per-extension exception is the same one described above, one level up: it
+# makes "write a gate" and "make the gate runnable" two steps, and the second gets
+# forgotten. Every gate this project has written is a shell script, so this is the
+# extension that matters, and it should have been here from the first one.
+!ops/tmp-*/*.sh
+
+# Same gap, one extension over: the B4 evidence for the truncated-posting finding is a .md
+# (`ops/tmp-core38/ACC-SINV-03099-B4.md`), and BUILD_TRACKER.md and GATES.md both cite it.
+# Every extension above was re-included for the same reason -- a cited artefact that is not
+# tracked stops existing on a fresh clone while the ledger still names it. Force-adding would
+# paper over this: the next edit to the ledger would show 'nothing to commit' and the evidence
+# would silently stop being evidence.
+!ops/tmp-*/*.md
+
+# ...and `.js`, which was MISSING and cost more than the rest put together.
+# `ops/tmp-ph3-05/browser.js` is the shared CDP helper that CORE-19's gate and both PH1
+# browser gates `import`. Every one of those gates is a `DONE` row whose CHECK names a
+# script that imports a file git ignores -- so on a fresh clone they cannot run at all,
+# and the failure is a module-not-found rather than anything that names the cause.
+#
+# Found the hard way: a scoped-precondition fix landed in it, `git diff` reported the file
+# UNCHANGED, and the reason was that for a gitignored path `git diff` reports nothing. The
+# file had the fix in it the whole time and was not in `HEAD`. **An untracked file cannot
+# be reviewed by reading the diff, because there is no diff.**
+!ops/tmp-*/*.js
+# A gate NOTE may cite a probe that produced its measurement (DOCS-04 section 5.7
+# cites `ops/tmp-ph3-02/orphan_rows.py` as the read that root-caused the localhost
+# 500). Citing a file git ignores leaves the next reader with a claim and no way to
+# re-run it, which is the same defect as an ungated CHECK command. Scoped to the one
+# named probe rather than a blanket `!ops/tmp-*/*.py`.
+!ops/tmp-*/orphan_rows.py
+
+# CORE-33's RAW EVIDENCE, named individually rather than by extension. Two attempts to
+# record WHY those numbers are contaminated have now failed on the same gap: `.md` was not
+# re-included, so an annotation file could not be committed. That is the third extension to
+# fall through this list (`.py`, `.mjs`, `.sh`, `.js`, now `.md`), and three is enough to
+# stop extending the list one line at a time.
+#
+# **The defect is the per-extension approach, not the missing entry.** Every one of those
+# gaps was found the same way: something was fixed, measured green, and a reader later found
+# the evidence was never in the repository. The extensions that matter here are exactly the
+# ones a GATE produces -- scripts it runs, harnesses it drives, files it writes -- and they
+# are already covered. Anything else belongs under `ops/tmp-*/` as scratch unless it is
+# NAMED here, with the reason, so the list stays short enough to be read.
+#
+# These two are kept because they are the only trace of a contaminated measurement. Editing
+# or deleting the figures would falsify the record; what is needed is that a reader can see
+# them AND see that they are not the leak figure.
+!ops/tmp-core33/before_core33.txt
+!ops/tmp-core33/after_core33.txt
+# Throwaway probes written directly into ops/ (not the row directories).
+# This class keeps reappearing because `ops/tmp-*/*` only matches
+# *inside* a directory, so a root-level `ops/tmp-anything.py` slips
+# through and gets committed. Ending the pattern, not the instance.
+ops/tmp-*.py
+planning/tmp-*/
+
+# Environment / secrets
+.env
+.env.*
+*.local
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node (for Frappe frontend build)
+node_modules/
+.pnpm-store/
+
+# BIM vendor bundles and WASM: GENERATED, 19 MB, and reproducible.
+# Built by erpnext_construction_ph/.../tools/build_bim_vendor.mjs from the pinned
+# `@thatopen/*` versions in package.json. Committed by accident once, which put
+# 227k lines of generated JS and three ~1.3 MB WASM binaries into history for no
+# benefit: a fresh clone runs the bundler and gets byte-identical output, and
+# committing it means every dependency bump leaves an unreviewable diff.
+# The same reasoning excludes the third-party .ifc fixture used by the PH3-02
+# gate -- it is That Open's `school_str.ifc`, not this project's data, and it is
+# re-fetchable from the URL the gate names.
+erpnext_construction_ph/erpnext_construction_ph/public/js/bim/vendor/
+erpnext_construction_ph/erpnext_construction_ph/*.ifc
+erpnext_construction_ph/erpnext_construction_ph/*.frag
+
+# Frappe bench artifacts (if bench lives inside repo root)
+apps/
+sites/
+logs/
+config/
+env/
+jar*.txt
+sk*.txt
+jar*.txt
+ops/tmp-corebench/*.sql filter=diff merge=binary
+*.sql
+
+# A stray file-descriptor redirect (`2>&1` mis-typed, or `> 222`) lands a zero-byte file
+# named for the fd in the repo root. Twice now: 222 and 229. Nothing legitimate here is a
+# bare number, so refuse them at the door rather than letting them show up as untracked.
+/[0-9]*
+
+# --- Internal engineering record — NOT published (added 2026-10-05) -------------
+# These were removed from git HISTORY, not merely untracked, because they carry
+# candid internal material: named owners on blocked rows, unresolved class-A findings,
+# and literal local dev credentials. They stay on disk and stay in use; they are just
+# no longer part of what is published. See C:\construction-erp-backup-20261005-1149.
+/ops/
+/GATES.md
+/BUILD_TRACKER.md
+/AGENTS.md
+/BUILD-DESCRIPTION-*.md

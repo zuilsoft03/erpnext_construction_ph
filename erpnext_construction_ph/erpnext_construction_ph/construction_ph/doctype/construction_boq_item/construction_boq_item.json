@@ -1,0 +1,135 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-09-28 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "boq",
+  "pay_item_number",
+  "item_code",
+  "description",
+  "unit",
+  "quantity",
+  "direct_cost",
+  "ocm",
+  "profit",
+  "unit_price",
+  "total"
+ ],
+ "fields": [
+  {
+   "fieldname": "boq",
+   "fieldtype": "Link",
+   "label": "Bill of Quantities",
+   "options": "Construction BOQ",
+   "description": "Set when rows are bulk-inserted by api/boq_matrix.bulk_insert_boq_items; left empty for rows edited inline on the parent BOQ. The CORE-04 gate counts rows by this field."
+  },
+  {
+   "fieldname": "pay_item_number",
+   "fieldtype": "Data",
+   "label": "Pay Item Number",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "description": "The pay item / DPWH numbering carried over from the Excel paste."
+  },
+  {
+   "fieldname": "item_code",
+   "fieldtype": "Data",
+   "label": "Item Code",
+   "reqd": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  },
+  {
+   "fieldname": "unit",
+   "fieldtype": "Link",
+   "label": "Unit",
+   "options": "UOM",
+   "reqd": 1
+  },
+  {
+   "fieldname": "bim_element",
+   "fieldtype": "Data",
+   "label": "BIM Element (GlobalId)",
+   "description": "The IFC GlobalId of the element this line measures. Takes a takeoff's own element-to-line mapping, which an issue's element reference cannot: that is per-topic, so an element nobody raised an issue about has no line.",
+   "insert_after": "description"
+  },
+  {
+   "fieldname": "quantity",
+   "fieldtype": "Float",
+   "label": "Quantity",
+   "reqd": 1,
+   "default": "0"
+  },
+  {
+   "fieldname": "direct_cost",
+   "fieldtype": "Currency",
+   "label": "Direct Cost",
+   "reqd": 1,
+   "default": "0"
+  },
+  {
+   "fieldname": "ocm",
+   "fieldtype": "Percent",
+   "label": "OCM (%)",
+   "default": "0",
+   "description": "Overhead, contingency and mobilisation."
+  },
+  {
+   "fieldname": "profit",
+   "fieldtype": "Percent",
+   "label": "Profit (%)",
+   "default": "0"
+  },
+  {
+   "fieldname": "unit_price",
+   "fieldtype": "Currency",
+   "label": "Unit Price",
+   "read_only": 1,
+   "description": "direct_cost x (1 + OCM + profit)."
+  },
+  {
+   "fieldname": "total",
+   "fieldtype": "Currency",
+   "label": "Total",
+   "read_only": 1
+  },
+  {
+   "fieldname": "planned_start",
+   "fieldtype": "Date",
+   "label": "Planned Start",
+   "description": "Start of the planned window. Drives PV in the S-curve (D-026); without it the curve degenerates to a straight line."
+  },
+  {
+   "fieldname": "planned_end",
+   "fieldtype": "Date",
+   "label": "Planned End",
+   "description": "End of the planned window. A zero-length item (planned_end == planned_start) counts 0 before its start and 1 at or after it."
+  },
+  {
+   "fieldname": "actual_percent_complete",
+   "fieldtype": "Percent",
+   "label": "Actual % Complete",
+   "default": "0",
+   "description": "Progress actually achieved. This is EV's only source, kept deliberately separate from the planned dates so SPI can be less than 1."
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-09-28 04:21:57.000000",
+ "modified_by": "Administrator",
+ "module": "Construction PH",
+ "name": "Construction BOQ Item",
+ "name_case": "Title Case",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

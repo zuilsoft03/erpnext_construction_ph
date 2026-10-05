@@ -1,0 +1,25 @@
+{
+ "doctype": "Notification",
+ "name": "BCF Topic Assigned",
+ "channel": "Email",
+ "subject": "{{ doc.title }} has been assigned to you",
+ "condition": "doc.assigned_to",
+ "document_type": "BCF Topic",
+ "event": "Value Change",
+ "value_changed": "assigned_to",
+ "enabled": 1,
+ "is_standard": 0,
+ "creation": "2026-09-29 00:00:00.000000",
+ "modified": "2026-09-29 00:00:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator",
+ "module": "Construction PH",
+ "message": "<p>You have been assigned the BCF topic <b>{{ doc.title }}</b>.</p><p>Type: {{ doc.topic_type }}<br>Status: {{ doc.status }}{% if doc.due_date %}<br>Due: {{ doc.due_date }}{% endif %}</p><p><a href=\"{{ frappe.utils.get_url(doc) }}\">Open the topic</a></p>",
+ "recipients": [
+  {
+   "receiver_by_document_field": "assigned_to"
+  }
+ ],
+ "send_system_notification": 1,
+ "send_email_notification": 1
+}

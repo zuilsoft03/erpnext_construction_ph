@@ -1,0 +1,22 @@
+# Generated artifacts must keep their exact bytes.
+#
+# Every rule here protects something that is CHECKED against recorded bytes, so a
+# checkout that rewrites line endings would fail a test for a reason that has
+# nothing to do with what the test is about.
+
+# The TipTap bundle (PH1-10). Its size is recorded in the esbuild metafile next to
+# it, and test_tiptap_bundle.py compares the two -- so a CRLF conversion on
+# checkout would break a provenance check for purely mechanical reasons. It is also
+# a build output, not source to be normalised.
+erpnext_construction_ph/erpnext_construction_ph/public/js/editor/tiptap.bundle.js -text
+
+# The same build's inputs and record: the bundle entry (bare specifiers, never
+# served) and the metafile (a record of one specific build). A spurious diff on a
+# regenerated metafile trains people to ignore the file that carries provenance.
+erpnext_construction_ph/erpnext_construction_ph/tools/* -text
+
+# The vendored BCF schemas are byte-pinned by SHA-256 against upstream
+# (test_vendored_schemas_are_byte_identical_to_upstream), and CC BY-ND forbids
+# editing them at all. A checkout that rewrote them would fail a provenance test
+# for a reason that has nothing to do with provenance.
+erpnext_construction_ph/erpnext_construction_ph/construction_ph/bcf/schema/** -text

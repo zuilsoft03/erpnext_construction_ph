@@ -1,0 +1,180 @@
+/* Construction Desk styling for erpnext_construction_ph.
+ *
+ * Loaded on every Desk page via hooks.py app_include_css. Kept to the
+ * construction-specific surfaces (workspaces, BOQ worksheet, safety logs,
+ * billing certification) so it does not fight core Desk CSS.
+ */
+
+/* ---------- CIAP 102 progress billing certification ---------- */
+.cpb-certification-summary {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+	gap: var(--margin-md, 12px);
+	padding: var(--margin-md, 12px) 0;
+}
+
+.cpb-certification-summary .card {
+	border: 1px solid var(--border-color, #e2e6e9);
+	border-radius: var(--border-radius-md, 6px);
+	padding: var(--margin-sm, 10px);
+	text-align: right;
+}
+
+.cpb-certification-summary .label {
+	display: block;
+	font-size: var(--font-size-sm, 12px);
+	color: var(--text-muted, #7c7c7c);
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+}
+
+.cpb-certification-summary .value {
+	font-size: var(--font-size-lg, 18px);
+	font-weight: 600;
+	font-variant-numeric: tabular-nums;
+}
+
+/* Retention stops at the 50% milestone (CIAP Document 102). Once cumulative
+   accomplishment passes it the figure is a real zero, not a rounding crumb. */
+.cpb-retention-active .value {
+	color: var(--orange-500, #e67e22);
+}
+
+.cpb-retention-stopped .value {
+	color: var(--green-500, #2f9e44);
+}
+
+.cpb-retention-stopped::after {
+	content: "50% milestone reached";
+	display: block;
+	font-size: var(--font-size-xs, 11px);
+	color: var(--text-muted, #7c7c7c);
+}
+
+/* ---------- BOQ worksheet ---------- */
+.boq-worksheet-paste {
+	font-family: var(--font-stack-monospace, monospace);
+	font-size: var(--font-size-sm, 12px);
+	white-space: pre;
+	overflow-x: auto;
+	min-height: 240px;
+	border: 1px dashed var(--border-color, #c8cdd2);
+	border-radius: var(--border-radius-md, 6px);
+	padding: var(--margin-sm, 10px);
+	background: var(--gray-50, #fafbfc);
+}
+
+.boq-worksheet-preview table {
+	width: 100%;
+	border-collapse: collapse;
+	font-variant-numeric: tabular-nums;
+}
+
+.boq-worksheet-preview th,
+.boq-worksheet-preview td {
+	border-bottom: 1px solid var(--border-color, #e2e6e9);
+	padding: 4px 8px;
+	text-align: right;
+}
+
+.boq-worksheet-preview th:first-child,
+.boq-worksheet-preview td:first-child,
+.boq-worksheet-preview th:nth-child(2),
+.boq-worksheet-preview td:nth-child(2),
+.boq-worksheet-preview th:nth-child(3),
+.boq-worksheet-preview td:nth-child(3) {
+	text-align: left;
+}
+
+.boq-worksheet-preview tr.cpb-row-error td {
+	background: var(--red-50, #fff5f5);
+	color: var(--red-600, #e03131);
+}
+
+/* A BOQ that has left Draft has frozen priced rows; make that visible before
+   someone tries to edit one and loses the change to a validation error. */
+.boq-frozen-hint {
+	border-left: 3px solid var(--orange-500, #e67e22);
+	padding-left: 8px;
+	color: var(--text-muted, #7c7c7c);
+	font-size: var(--font-size-sm, 12px);
+}
+
+/* ---------- Construction Safety Log ---------- */
+.safety-log-tbm {
+	font-weight: 600;
+}
+
+.safety-log-backdated {
+	color: var(--red-600, #e03131);
+	font-weight: 600;
+}
+
+/* ---------- BIM / BCF ---------- */
+.bim-model-card {
+	border: 1px solid var(--border-color, #e2e6e9);
+	border-radius: var(--border-radius-md, 6px);
+	padding: var(--margin-sm, 10px);
+	margin-bottom: var(--margin-sm, 10px);
+}
+
+.bim-model-card .conversion-status {
+	font-size: var(--font-size-xs, 11px);
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.bim-model-card .conversion-status[data-status="Ready"] {
+	color: var(--green-600, #2b8a3e);
+}
+
+.bim-model-card .conversion-status[data-status="Failed"] {
+	color: var(--red-600, #e03131);
+}
+
+.bim-viewer-surface {
+	position: relative;
+	width: 100%;
+	height: 420px;
+	background: #1b1f23;
+	border-radius: var(--border-radius-md, 6px);
+	overflow: hidden;
+}
+
+.bim-viewer-surface .bcf-issue-marker {
+	position: absolute;
+	width: 18px;
+	height: 18px;
+	margin: -9px 0 0 -9px;
+	border-radius: 50%;
+	background: var(--red-500, #f03e3e);
+	color: #fff;
+	font-size: 11px;
+	line-height: 18px;
+	text-align: center;
+	cursor: pointer;
+}
+
+.bim-viewer-placeholder {
+	color: #c8cdd2;
+	font-size: var(--font-size-sm, 12px);
+	padding: var(--margin-lg, 16px);
+	text-align: center;
+}
+
+/* A grouping node in the model tree: no element behind it, so it must not read as
+   one. The dot is hollow rather than filled for the same reason -- filled means
+   "selectable element", and every other row in this list is. */
+.bim-ws-node--group {
+	font-weight: 600;
+	color: var(--text-muted, #6b7280);
+	cursor: default;
+	user-select: none;
+}
+.bim-ws-node--group:hover {
+	background: transparent;
+}
+.bim-ws-dot--group {
+	background: transparent;
+	border: 1px solid currentColor;
+}

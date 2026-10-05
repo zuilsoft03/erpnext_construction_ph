@@ -1,0 +1,56 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-09-28 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "viewpoint_guid",
+  "comment",
+  "snapshot_image",
+  "camera_vectors"
+ ],
+ "fields": [
+  {
+   "fieldname": "viewpoint_guid",
+   "fieldtype": "Data",
+   "label": "Viewpoint GUID",
+   "unique": 1,
+   "description": "UUID v4, populated by the BCF controller; see BCF Topic.topic_guid."
+  },
+  {
+   "fieldname": "comment",
+   "fieldtype": "Small Text",
+   "label": "Comment"
+  },
+  {
+   "fieldname": "snapshot_image",
+   "fieldtype": "Attach",
+   "label": "Snapshot Image",
+   "options": "File",
+   "reqd": 1,
+   "description": "Required on creation."
+  },
+  {
+   "fieldname": "camera_vectors",
+   "fieldtype": "Code",
+   "label": "Camera Vectors",
+   "options": "JSON",
+   "description": "Camera position/orientation as JSON."
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-09-28 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Construction PH",
+ "name": "BCF Viewpoint",
+ "name_case": "Title Case",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

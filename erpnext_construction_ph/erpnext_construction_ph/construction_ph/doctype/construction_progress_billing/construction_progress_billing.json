@@ -1,0 +1,325 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "field:billing_number",
+ "creation": "2026-09-28 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "billing_number",
+  "project",
+  "company",
+  "client",
+  "posting_date",
+  "billing_period_start",
+  "billing_period_end",
+  "contract_amount",
+  "period_accomplishment_percent",
+  "mobilization_recoupment",
+  "cumulative_accomplishment",
+  "certification_section",
+  "gross_accomplishment_period",
+  "cumulative_percent",
+  "retention_milestone_reached",
+  "taxable_base",
+  "vat_amount",
+  "net_before_retention",
+  "retention_amount",
+  "cwt_withheld",
+  "net_amount_due",
+  "posting_section",
+  "sales_invoice",
+  "remarks"
+ ],
+ "fields": [
+  {
+   "fieldname": "billing_number",
+   "fieldtype": "Data",
+   "in_standard_filter": 1,
+   "label": "Billing Number",
+   "reqd": 1,
+   "set_only_once": 1,
+   "unique": 1,
+   "idx": 1
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Project",
+   "options": "Project",
+   "reqd": 1,
+   "idx": 2
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1,
+   "idx": 3
+  },
+  {
+   "fieldname": "client",
+   "fieldtype": "Link",
+   "label": "Client",
+   "options": "Customer",
+   "reqd": 1,
+   "idx": 4
+  },
+  {
+   "default": "Today",
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Posting Date",
+   "reqd": 1,
+   "idx": 5
+  },
+  {
+   "fieldname": "billing_period_start",
+   "fieldtype": "Date",
+   "label": "Billing Period Start",
+   "reqd": 1,
+   "idx": 6
+  },
+  {
+   "fieldname": "billing_period_end",
+   "fieldtype": "Date",
+   "label": "Billing Period End",
+   "reqd": 1,
+   "idx": 7
+  },
+  {
+   "fieldname": "contract_amount",
+   "fieldtype": "Currency",
+   "label": "Contract Amount",
+   "reqd": 1,
+   "idx": 8
+  },
+  {
+   "fieldname": "period_accomplishment_percent",
+   "fieldtype": "Percent",
+   "label": "Period Accomplishment (%)",
+   "reqd": 1,
+   "idx": 9
+  },
+  {
+   "fieldname": "mobilization_recoupment",
+   "fieldtype": "Currency",
+   "label": "Mobilization Recoupment",
+   "idx": 10
+  },
+  {
+   "fieldname": "cumulative_accomplishment",
+   "fieldtype": "Currency",
+   "label": "Cumulative Accomplishment",
+   "reqd": 1,
+   "idx": 11
+  },
+  {
+   "fieldname": "certification_section",
+   "fieldtype": "Section Break",
+   "label": "CIAP 102 Certification",
+   "idx": 12
+  },
+  {
+   "fieldname": "gross_accomplishment_period",
+   "fieldtype": "Currency",
+   "label": "Gross Accomplishment (Period)",
+   "read_only": 1,
+   "idx": 13
+  },
+  {
+   "fieldname": "cumulative_percent",
+   "fieldtype": "Percent",
+   "label": "Cumulative Accomplishment (%)",
+   "read_only": 1,
+   "precision": 6,
+   "idx": 14
+  },
+  {
+   "default": "0",
+   "description": "Set when cumulative accomplishment passes 50% of the contract amount, so retention stops. Recorded explicitly because Cumulative Accomplishment (%) is rounded to 2dp on save and could otherwise read \"50.00%\" beside a zero retention without saying which rule applied.",
+   "fieldname": "retention_milestone_reached",
+   "fieldtype": "Check",
+   "label": "Retention Milestone Reached (50%)",
+   "read_only": 1,
+   "idx": 15
+  },
+  {
+   "description": "Certified accomplishment for the period less mobilization recoupment. This is the base for both the 12% Output VAT and the 2% CWT.",
+   "fieldname": "taxable_base",
+   "fieldtype": "Currency",
+   "label": "Taxable Base",
+   "read_only": 1,
+   "idx": 16
+  },
+  {
+   "description": "12% Output VAT on the taxable base.",
+   "fieldname": "vat_amount",
+   "fieldtype": "Currency",
+   "label": "VAT Amount (12%)",
+   "read_only": 1,
+   "idx": 17
+  },
+  {
+   "description": "Taxable base plus VAT: the certified claim before retention is deducted.",
+   "fieldname": "net_before_retention",
+   "fieldtype": "Currency",
+   "label": "Net Before Retention",
+   "read_only": 1,
+   "idx": 18
+  },
+  {
+   "description": "10% retention withheld per CIAP Document 102, stopped once cumulative accomplishment passes 50% of the contract amount.",
+   "fieldname": "retention_amount",
+   "fieldtype": "Currency",
+   "label": "Retention Amount (10%)",
+   "read_only": 1,
+   "idx": 19
+  },
+  {
+   "description": "2% Creditable Withholding Tax on the taxable base (BIR Form 2307, ATC WC120).",
+   "fieldname": "cwt_withheld",
+   "fieldtype": "Currency",
+   "label": "CWT Withheld (2%)",
+   "read_only": 1,
+   "idx": 20
+  },
+  {
+   "bold": 1,
+   "description": "taxable_base - retention_amount + vat_amount - cwt_withheld",
+   "fieldname": "net_amount_due",
+   "fieldtype": "Currency",
+   "label": "Net Amount Due",
+   "read_only": 1,
+   "idx": 21
+  },
+  {
+   "fieldname": "posting_section",
+   "fieldtype": "Section Break",
+   "label": "Posting",
+   "idx": 22
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "sales_invoice",
+   "fieldtype": "Link",
+   "label": "Sales Invoice",
+   "options": "Sales Invoice",
+   "read_only": 1,
+   "idx": 23
+  },
+  {
+   "fieldname": "submitted_on",
+   "fieldtype": "Datetime",
+   "label": "Submitted On (CIAP 102 Clock)",
+   "read_only": 1,
+   "description": "When this billing was submitted. The CIAP 102 30-day payment clock runs from here, not from creation. allow_on_submit is deliberate: it makes the controller's immutability guard the thing that refuses a re-date, instead of leaving the field protected only by a framework default the guard would never be reached behind.",
+   "idx": 24,
+   "allow_on_submit": 1
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks",
+   "idx": 25
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-09-28 02:52:55.000000",
+ "modified_by": "Administrator",
+ "module": "Construction PH",
+ "name": "Construction Progress Billing",
+ "name_case": "Title Case",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Construction Project Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Construction Estimator",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Construction Site Manager",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Construction Contract Administrator",
+   "write": 1
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "role": "Construction Project Accountant",
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "role": "Construction BIM Coordinator"
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "role": "Construction Buyer"
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "role": "Construction Planner"
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "role": "Construction Design Lead"
+  },
+  {
+   "read": 1,
+   "report": 1,
+   "role": "Construction Field Foreman"
+  }
+ ],
+ "sort_field": "posting_date",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "billing_number",
+ "track_changes": 1
+}

@@ -1,0 +1,13 @@
+{
+	"dependencies": {
+		"@thatopen/components": "3.4.8",
+		"@thatopen/fragments": "3.4.7",
+		"@tiptap/core": "2.27.3",
+		"@tiptap/extension-link": "2.27.3",
+		"@tiptap/extension-underline": "2.27.3",
+		"@tiptap/starter-kit": "2.27.3",
+		"esbuild": "^0.28.2",
+		"pdfjs-dist": "4.10.38",
+		"web-ifc": "^0.0.77"
+	}
+}

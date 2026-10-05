@@ -1,0 +1,56 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-09-28 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "element",
+  "boq_item",
+  "ifc_class",
+  "global_id"
+ ],
+ "fields": [
+  {
+   "fieldname": "element",
+   "fieldtype": "Link",
+   "label": "BIM Model GUID",
+   "options": "BIM Model GUID",
+   "read_only": 1
+  },
+  {
+   "fieldname": "boq_item",
+   "fieldtype": "Link",
+   "label": "BOQ Item",
+   "options": "Construction BOQ Item",
+   "description": "Roadmap BIM-07: the bridge from an IFC element to a cost line. UI-5's Properties card reads this for the Cost row, and UI-6's comparison uses the BOQ rate."
+  },
+  {
+   "fieldname": "ifc_class",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "IFC Class",
+   "read_only": 1
+  },
+  {
+   "fieldname": "global_id",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "IFC GlobalId",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-09-28 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Construction PH",
+ "name": "BCF Element Reference",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -1,0 +1,1019 @@
+/* BIM Workspace — layout for the OpenProject-style viewer surface.
+ *
+ * Three columns, because that grouping is the part of OpenProject's IFC viewer
+ * worth copying: a viewer with only the model in the middle leaves a coordinator
+ * navigating blind — they can see a wall but not say which one. The tree names it,
+ * the properties panel identifies it, the issues panel says what is wrong with it.
+ */
+
+.bim-ws-root {
+	/* `width: 100%` is load-bearing, and was MISSING.
+	 *
+	 * Without it the root shrink-wrapped to its content, so `.bim-ws` laid out at
+	 * 776px inside a 1280px viewport: 260 (left) + 300 (right) + two 10px gaps,
+	 * and the stage took whatever was left -- 196px. The flex rules were all
+	 * correct; `flex: 1 1 auto` distributes the width the CONTAINER has, and the
+	 * container had none to give. A 196px viewport for a BIM model is not a
+	 * cosmetic problem: it is the difference between seeing a clash and not.
+	 */
+	width: 100%;
+	height: 100%;
+	min-height: 520px;
+}
+
+.bim-ws {
+	display: flex;
+	gap: 10px;
+	width: 100%;
+	height: 100%;
+	min-height: 520px;
+}
+
+.bim-ws-side {
+	width: 260px;
+	flex: 0 0 260px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	min-height: 0;
+}
+
+.bim-ws-right {
+	width: 300px;
+	flex-basis: 300px;
+}
+
+.bim-ws-block {
+	border: 1px solid var(--border-color, #e2e6ea);
+	border-radius: 6px;
+	padding: 10px;
+	background: var(--card-bg, #fff);
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	min-height: 0;
+}
+
+.bim-ws-grow {
+	flex: 1 1 auto;
+	overflow: auto;
+}
+
+.bim-ws-label {
+	font-weight: 600;
+	font-size: 12px;
+	text-transform: uppercase;
+	letter-spacing: 0.4px;
+	color: var(--text-muted, #7c7c7c);
+}
+
+.bim-ws-stage {
+	flex: 1 1 auto;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	min-width: 0;
+	min-height: 0;
+}
+
+/* The canvas needs an explicit height. A flex child with only `flex: 1` inside an
+ * auto-height parent collapses to zero, which is the second-most-common reason a
+ * WebGL canvas renders nothing. */
+.bim-ws-canvas {
+	flex: 1 1 auto;
+	min-height: 420px;
+	border: 1px solid var(--border-color, #e2e6ea);
+	border-radius: 6px;
+	background: #f7f8f9;
+	position: relative;
+	overflow: hidden;
+}
+
+.bim-ws-canvas canvas {
+	display: block;
+	width: 100% !important;
+	height: 100% !important;
+}
+
+.bim-ws-toolbar {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.bim-ws-hint,
+.bim-ws-status {
+	font-size: 12px;
+	color: var(--text-muted, #7c7c7c);
+}
+
+.bim-ws-status:not(:empty) {
+	padding: 6px 8px;
+	border-radius: 4px;
+	background: var(--gray-100, #f4f5f6);
+}
+
+/* Tree rows. Indent comes from an inline padding-left per depth, so the rule here
+ * only carries the row chrome. */
+.bim-ws-node {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 13px;
+	padding: 2px 0;
+	cursor: default;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.bim-ws-dot {
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: var(--text-muted, #b0b6bb);
+	flex: 0 0 6px;
+}
+
+.bim-ws-props-table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 13px;
+}
+
+.bim-ws-props-table td {
+	padding: 3px 4px;
+	border-bottom: 1px solid var(--border-color, #eef0f2);
+	vertical-align: top;
+	word-break: break-all;
+}
+
+.bim-ws-props-table td:first-child {
+	color: var(--text-muted, #7c7c7c);
+	white-space: nowrap;
+	width: 40%;
+}
+
+.bim-ws-issue {
+	padding: 6px 4px;
+	border-bottom: 1px solid var(--border-color, #eef0f2);
+	cursor: pointer;
+}
+
+.bim-ws-issue:hover {
+	background: var(--gray-100, #f7f8f9);
+}
+
+.bim-ws-issue-title {
+	display: block;
+	font-size: 13px;
+	font-weight: 500;
+}
+
+.bim-ws-issue-meta {
+	display: block;
+	font-size: 11px;
+	color: var(--text-muted, #7c7c7c);
+}
+
+/* Empty and loading states. A panel that is simply blank cannot be told apart from
+ * one that failed, so every one of these says what it means. */
+.bim-ws-empty,
+.bim-ws-loading {
+	font-size: 12px;
+	color: var(--text-muted, #7c7c7c);
+	padding: 10px 4px;
+	line-height: 1.5;
+}
+
+/* ---------------------------------------------------------------------------
+ * The tab spine (UI-0).
+ *
+ * The viewports are SIBLINGS that are all in the DOM and all sized the same, and a
+ * switch toggles `hidden`. The sizing is the load-bearing part: a `display: none`
+ * ancestor gives a WebGL canvas a zero-sized drawing buffer, and a canvas that has
+ * been zero-sized once does not reliably recover its drawing buffer when shown
+ * again -- which shows up as a black viewport after a tab round trip, with no error
+ * anywhere. So the hosts keep a real height whether or not they are the active tab.
+ * ------------------------------------------------------------------------- */
+
+.bim-ws-tabslot {
+	display: flex;
+	flex-direction: column;
+	flex: 1 1 auto;
+	min-height: 0;
+}
+
+.bim-ws-tabs {
+	display: flex;
+	gap: 2px;
+	border-bottom: 1px solid var(--border-color, #e2e6ea);
+	padding-bottom: 4px;
+	margin-bottom: 6px;
+	flex: 0 0 auto;
+}
+
+.bim-ws-tab {
+	appearance: none;
+	border: 1px solid transparent;
+	background: transparent;
+	color: var(--text-muted, #6b7684);
+	font-size: 13px;
+	padding: 5px 12px;
+	border-radius: 5px;
+	cursor: pointer;
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.bim-ws-tab:hover {
+	background: var(--hover-bg, #f2f4f6);
+}
+
+/* `aria-selected` as well as `.active`, so the styling does not depend on a class
+ * a later refactor might stop writing. */
+.bim-ws-tab.active,
+.bim-ws-tab[aria-selected="true"] {
+	background: var(--card-bg, #fff);
+	border-color: var(--border-color, #e2e6ea);
+	color: var(--text-color, #1f272e);
+	font-weight: 600;
+}
+
+.bim-ws-tab:focus-visible {
+	outline: 2px solid var(--primary-color, #2563eb);
+	outline-offset: 1px;
+}
+
+.bim-ws-tab-badge:empty {
+	display: none;
+}
+
+.bim-ws-tab-badge {
+	background: var(--primary-color, #2563eb);
+	color: #fff;
+	border-radius: 9px;
+	font-size: 11px;
+	padding: 0 6px;
+	font-weight: 600;
+}
+
+/* Every host is a flex column of full size. `hidden` collapses the inactive ones
+ * without ever unmounting what is inside them. */
+.bim-ws-viewport {
+	flex: 1 1 auto;
+	min-height: 380px;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+}
+
+/* The active viewport is the one that shows the toolbar and status bar, which
+ * belong to the 3D model rather than to the page. */
+.bim-ws-canvas {
+	flex: 1 1 auto;
+	min-height: 380px;
+	position: relative;
+}
+
+/* Side panels describe the 3D model. On the PDF and split tabs they are dimmed
+ * rather than hidden, so the layout does not jump and the reason is visible. */
+.bim-ws-dimmed {
+	opacity: 0.45;
+	pointer-events: none;
+	transition: opacity 0.15s ease-out;
+}
+
+/* ---------------------------------------------------------------------------
+ * The left panel cards (UI-2).
+ *
+ * Cards are hidden with `hidden`, never removed, so a calibration or a typed
+ * description survives a tab change. The column itself is the spec's fixed 260px;
+ * the panel fills it and scrolls.
+ * ------------------------------------------------------------------------- */
+
+.bim-ws-side-left {
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.bim-ws-card {
+	border: 1px solid var(--border-color, #e2e6ea);
+	border-radius: 6px;
+	background: var(--card-bg, #fff);
+	padding: 8px 10px;
+	margin-bottom: 10px;
+}
+
+.bim-ws-card-body {
+	margin-top: 6px;
+	font-size: 13px;
+}
+
+.bim-ws-field {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 6px;
+}
+
+.bim-ws-field label {
+	font-size: 11px;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+	color: var(--text-muted, #6b7684);
+	margin-bottom: 2px;
+}
+
+.bim-ws-field input,
+.bim-ws-field select,
+.bim-ws-model {
+	width: 100%;
+	box-sizing: border-box;
+	font-size: 13px;
+}
+
+/* A refused value: the panel marks it rather than silently computing with it. */
+.bim-ws-invalid {
+	border-color: var(--danger-color, #e0484d) !important;
+	outline: 1px solid var(--danger-color, #e0484d);
+}
+
+.bim-ws-node {
+	cursor: pointer;
+	padding: 2px 4px;
+	border-radius: 3px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.bim-ws-node:hover {
+	background: var(--hover-bg, #f2f4f6);
+}
+
+.bim-ws-node.is-active {
+	background: var(--primary-color, #2563eb);
+	color: #fff;
+}
+
+.bim-ws-node:focus-visible {
+	outline: 2px solid var(--primary-color, #2563eb);
+	outline-offset: 1px;
+}
+
+.bim-ws-dot {
+	display: inline-block;
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: currentColor;
+	opacity: 0.45;
+	margin-right: 6px;
+	vertical-align: middle;
+}
+
+.bim-ws-sheet {
+	display: flex;
+	justify-content: space-between;
+	gap: 8px;
+	padding: 3px 4px;
+	cursor: pointer;
+	border-radius: 3px;
+}
+
+.bim-ws-sheet:hover {
+	background: var(--hover-bg, #f2f4f6);
+}
+
+.bim-ws-sheet-meta {
+	color: var(--text-muted, #6b7684);
+	font-size: 11px;
+}
+
+.bim-ws-captured {
+	display: flex;
+	gap: 6px;
+	padding: 2px 0;
+}
+
+.bim-ws-cal-summary {
+	font-size: 12px;
+	margin-bottom: 4px;
+}
+
+/* ---------------------------------------------------------------------------
+ * The PDF takeoff viewport (UI-1).
+ *
+ * The stage scrolls rather than shrinks, because a plan is usually wider than the
+ * panel and a surveyor needs to pan it -- and a canvas that is squeezed to fit
+ * would silently change the aspect ratio every click is measured against.
+ * ------------------------------------------------------------------------- */
+
+.bim-pdf {
+	display: flex;
+	flex-direction: column;
+	flex: 1 1 auto;
+	min-height: 0;
+	height: 100%;
+}
+
+.bim-pdf-toolbar {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	flex-wrap: wrap;
+	padding-bottom: 6px;
+	border-bottom: 1px solid var(--border-color, #e2e6ea);
+	margin-bottom: 6px;
+	font-size: 12px;
+}
+
+.bim-pdf-page {
+	min-width: 52px;
+	text-align: center;
+	color: var(--text-muted, #6b7684);
+	font-variant-numeric: tabular-nums;
+}
+
+.bim-pdf-file {
+	cursor: pointer;
+	margin: 0;
+}
+
+.bim-pdf-stage {
+	flex: 1 1 auto;
+	min-height: 0;
+	overflow: auto;
+	background: var(--gray-50, #f7f8fa);
+	padding: 8px;
+}
+
+/* `display: block` so the canvas is laid out at its intrinsic PDF size instead
+ * of being scaled by the flex row, which would break the click-to-page-units
+ * conversion the whole viewport depends on. */
+.bim-pdf-canvas {
+	display: block;
+	background: #fff;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+	cursor: crosshair;
+}
+
+.bim-pdf-status {
+	flex: 0 0 auto;
+	font-size: 12px;
+	color: var(--text-muted, #6b7684);
+	padding-top: 4px;
+	min-height: 18px;
+}
+
+/* ---------------------------------------------------------------------------
+ * BCF issue pins (UI-3).
+ *
+ * The layer sits over the canvas and is `pointer-events: none` so it does not
+ * swallow the canvas' own pick handler; the pins re-enable it for themselves.
+ * ------------------------------------------------------------------------- */
+
+.bim-ws-stage-wrap {
+	position: relative;
+	flex: 1 1 auto;
+	min-height: 380px;
+	display: flex;
+}
+
+.bim-pin-layer {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+}
+
+.bim-pin {
+	position: absolute;
+	transform: translate(-50%, -50%);
+	width: 22px;
+	height: 22px;
+	border-radius: 50% 50% 50% 0;
+	border: 2px solid #fff;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+	color: #fff;
+	font-size: 11px;
+	font-weight: 700;
+	line-height: 18px;
+	padding: 0;
+	cursor: pointer;
+	pointer-events: auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.bim-pin:hover,
+.bim-pin.is-focused {
+	transform: translate(-50%, -50%) scale(1.25);
+	z-index: 2;
+}
+
+.bim-pin.is-focused {
+	box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.6);
+}
+
+/* ---------------------------------------------------------------------------
+ * The floating toolbar (UI-10).
+ *
+ * Floats over the canvas rather than taking a row of its own, so the model keeps
+ * the full height. `pointer-events: none` on the container with it restored on the
+ * controls, so the strip does not steal drags meant for the viewer.
+ * ------------------------------------------------------------------------- */
+
+.bim-ws-toolbar-slot {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	right: 10px;
+	pointer-events: none;
+	display: flex;
+	justify-content: center;
+}
+
+.bim-toolbar {
+	display: inline-flex;
+	align-items: center;
+	gap: 2px;
+	background: rgba(255, 255, 255, 0.94);
+	border: 1px solid var(--border-color, #e2e6ea);
+	border-radius: 8px;
+	padding: 3px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+	pointer-events: auto;
+	position: relative;
+}
+
+.bim-tool {
+	appearance: none;
+	border: 0;
+	background: transparent;
+	width: 30px;
+	height: 30px;
+	border-radius: 6px;
+	cursor: pointer;
+	font-size: 15px;
+	line-height: 1;
+}
+
+.bim-tool:hover {
+	background: var(--hover-bg, #f2f4f6);
+}
+
+.bim-tool.is-active {
+	background: var(--primary-color, #2563eb);
+}
+
+.bim-tool:focus-visible {
+	outline: 2px solid var(--primary-color, #2563eb);
+	outline-offset: 1px;
+}
+
+/* The section presets hang below the Section tool rather than adding a row. */
+.bim-tool-sections {
+	display: none;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	gap: 2px;
+	background: var(--card-bg, #fff);
+	border: 1px solid var(--border-color, #e2e6ea);
+	border-radius: 6px;
+	padding: 3px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+	white-space: nowrap;
+}
+
+.bim-tool-sections.is-open {
+	display: flex;
+}
+
+.bim-tool-section {
+	appearance: none;
+	border: 0;
+	background: transparent;
+	font-size: 12px;
+	padding: 3px 8px;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.bim-tool-section:hover {
+	background: var(--hover-bg, #f2f4f6);
+}
+
+.bim-toolbar-status {
+	pointer-events: none;
+	margin-top: 6px;
+	text-align: center;
+	font-size: 12px;
+	color: var(--text-muted, #6b7684);
+	background: rgba(255, 255, 255, 0.9);
+	border-radius: 6px;
+	padding: 2px 8px;
+	display: inline-block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.bim-toolbar-status:empty {
+	display: none;
+}
+
+.bim-toolbar-status[data-tone="error"] {
+	color: var(--danger-color, #e0484d);
+}
+
+.bim-toolbar-status[data-tone="warn"] {
+	color: #b58105;
+}
+
+/* ---------------------------------------------------------------------------
+ * The issue dialog (UI-4).
+ *
+ * A dialog inside the page, not a route: the coordinator is looking at the model
+ * and the issue at the same time, and a page change discards one of them.
+ * ------------------------------------------------------------------------- */
+
+.bim-ws-modalhost {
+	position: relative;
+	z-index: 30;
+}
+
+.bim-issue-backdrop {
+	position: fixed;
+	inset: 0;
+	background: rgba(15, 20, 25, 0.35);
+}
+
+.bim-issue-modal {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 380px;
+	max-width: calc(100vw - 32px);
+	background: var(--card-bg, #fff);
+	border-radius: 8px;
+	box-shadow: 0 12px 40px rgba(0, 0, 0, 0.24);
+	padding: 14px;
+}
+
+.bim-issue-head {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 10px;
+}
+
+.bim-issue-title {
+	font-weight: 600;
+	font-size: 14px;
+}
+
+.bim-issue-close {
+	appearance: none;
+	border: 0;
+	background: transparent;
+	font-size: 20px;
+	line-height: 1;
+	cursor: pointer;
+	color: var(--text-muted, #6b7684);
+}
+
+.bim-issue-preview {
+	margin-bottom: 10px;
+	border: 1px solid var(--border-color, #e2e6ea);
+	border-radius: 6px;
+	overflow: hidden;
+	background: #fff;
+}
+
+.bim-issue-shot {
+	display: block;
+	width: 100%;
+	max-height: 190px;
+	object-fit: contain;
+}
+
+.bim-issue-nosnap {
+	padding: 14px;
+	font-size: 12px;
+	color: var(--text-muted, #6b7684);
+}
+
+.bim-issue-fields label {
+	display: block;
+	font-size: 11px;
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+	color: var(--text-muted, #6b7684);
+	margin-bottom: 8px;
+}
+
+.bim-issue-fields input,
+.bim-issue-fields select {
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+	margin-top: 2px;
+	font-size: 13px;
+	padding: 5px 6px;
+}
+
+.bim-issue-meta {
+	display: flex;
+	gap: 12px;
+	font-size: 11px;
+	color: var(--text-muted, #6b7684);
+	margin-bottom: 8px;
+}
+
+.bim-issue-error {
+	color: var(--danger-color, #e0484d);
+	font-size: 12px;
+	margin-bottom: 8px;
+}
+
+.bim-issue-actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 6px;
+}
+
+/* ---------------------------------------------------------------------------
+ * The right panel (UI-5).
+ * ------------------------------------------------------------------------- */
+
+.bim-ws-right {
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.bim-rp-card {
+	border: 1px solid var(--border-color, #e2e6ea);
+	border-radius: 6px;
+	background: var(--card-bg, #fff);
+	padding: 8px 10px;
+	margin-bottom: 10px;
+}
+
+.bim-rp-label {
+	font-size: 11px;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	color: var(--text-muted, #6b7684);
+	margin-bottom: 6px;
+}
+
+.bim-rp-table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 12px;
+}
+
+.bim-rp-key {
+	color: var(--text-muted, #6b7684);
+	padding: 2px 6px 2px 0;
+	vertical-align: top;
+	white-space: nowrap;
+}
+
+.bim-rp-val {
+	word-break: break-word;
+}
+
+/* A value the server could not supply. It reads as a note, never as a number --
+   a rendered 0 in a QS tool is a claim about the building, not about the data. */
+.bim-rp-val.is-unknown {
+	color: var(--text-muted, #6b7684);
+	font-style: italic;
+}
+
+.bim-rp-empty {
+	font-size: 12px;
+	color: var(--text-muted, #6b7684);
+}
+
+.bim-rp-issue {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	padding: 5px 4px;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.bim-rp-issue:hover {
+	background: var(--hover-bg, #f2f4f6);
+}
+
+.bim-rp-issue-title {
+	font-size: 12px;
+	font-weight: 500;
+}
+
+.bim-rp-issue-meta {
+	font-size: 11px;
+	color: var(--text-muted, #6b7684);
+}
+
+.bim-rp-vp {
+	cursor: pointer;
+	margin-bottom: 6px;
+}
+
+.bim-rp-vp img,
+.bim-rp-vp-blank {
+	width: 100%;
+	border-radius: 4px;
+	border: 1px solid var(--border-color, #e2e6ea);
+	object-fit: cover;
+}
+
+.bim-rp-vp-blank {
+	height: 60px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--text-muted, #6b7684);
+	font-size: 12px;
+}
+
+.bim-rp-vp-note {
+	font-size: 11px;
+	color: var(--text-muted, #6b7684);
+}
+
+.bim-rp-tk {
+	display: flex;
+	justify-content: space-between;
+	gap: 8px;
+	font-size: 12px;
+	padding: 2px 0;
+}
+
+.bim-rp-tk-qty {
+	color: var(--text-muted, #6b7684);
+	font-variant-numeric: tabular-nums;
+}
+
+.bim-progress {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.bim-progress-bar {
+	display: inline-block;
+	width: 54px;
+	height: 6px;
+	background: var(--gray-200, #e9ecef);
+	border-radius: 3px;
+	overflow: hidden;
+}
+
+.bim-progress-bar i {
+	display: block;
+	height: 100%;
+	background: var(--primary-color, #2563eb);
+}
+
+/* ---------------------------------------------------------------------------
+ * The 4D schedule overlay (UI-9).
+ * ------------------------------------------------------------------------- */
+
+.bim-ws-schedule-slot {
+	position: absolute;
+	left: 10px;
+	right: 10px;
+	bottom: 10px;
+	pointer-events: none;
+}
+
+.bim-sched {
+	pointer-events: auto;
+	background: rgba(255, 255, 255, 0.95);
+	border: 1px solid var(--border-color, #e2e6ea);
+	border-radius: 8px;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+	padding: 8px 10px;
+	max-width: 520px;
+	margin: 0 auto;
+}
+
+.bim-sched-head {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	font-size: 12px;
+	margin-bottom: 4px;
+}
+
+.bim-sched-label {
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	color: var(--text-muted, #6b7684);
+	font-size: 11px;
+}
+
+.bim-sched-date {
+	font-variant-numeric: tabular-nums;
+	font-weight: 600;
+}
+
+.bim-sched-scrub {
+	width: 100%;
+	margin: 2px 0 6px;
+}
+
+.bim-sched-legend {
+	display: flex;
+	gap: 12px;
+	font-size: 11px;
+	color: var(--text-muted, #6b7684);
+	flex-wrap: wrap;
+}
+
+.bim-sched-key::before {
+	content: "";
+	display: inline-block;
+	width: 8px;
+	height: 8px;
+	border-radius: 2px;
+	margin-right: 4px;
+	vertical-align: middle;
+}
+
+.bim-sched-key[data-state="future"]::before { background: #adb5bd; }
+.bim-sched-key[data-state="active"]::before { background: #f08c00; }
+.bim-sched-key[data-state="complete"]::before { background: #2f9e44; }
+/* Unscheduled is deliberately NOT a colour: an element nobody has scheduled has no
+   state to show, and painting it grey would read as "not started", which is a
+   claim about the work rather than about the record. */
+.bim-sched-key[data-state="unscheduled"]::before { background: repeating-linear-gradient(45deg, #ced4da 0 2px, transparent 2px 4px); }
+
+.bim-sched-coverage {
+	font-size: 11px;
+	color: var(--text-muted, #6b7684);
+	margin-top: 4px;
+}
+
+.bim-sched-coverage:empty {
+	display: none;
+}
+
+/* ---------------------------------------------------------------------------
+ * The split view (UI-6).
+ * ------------------------------------------------------------------------- */
+
+.bim-split-sync {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding-bottom: 6px;
+	border-bottom: 1px solid var(--border-color, #e2e6ea);
+	margin-bottom: 6px;
+	font-size: 12px;
+}
+
+.bim-split-hint {
+	color: var(--text-muted, #6b7684);
+}
+
+.bim-split-panes {
+	display: flex;
+	flex: 1 1 auto;
+	min-height: 0;
+	gap: 6px;
+}
+
+.bim-split-pane {
+	flex: 1 1 50%;
+	min-width: 0;
+	min-height: 0;
+	position: relative;
+	border: 1px solid var(--border-color, #e2e6ea);
+	border-radius: 6px;
+	background: var(--gray-50, #f7f8fa);
+	overflow: hidden;
+}
+
+.bim-split-label {
+	position: absolute;
+	top: 6px;
+	left: 8px;
+	z-index: 2;
+	font-size: 11px;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	color: var(--text-muted, #6b7684);
+	background: rgba(255, 255, 255, 0.85);
+	padding: 1px 6px;
+	border-radius: 4px;
+}

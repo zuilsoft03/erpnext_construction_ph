@@ -1,0 +1,9 @@
+{
+ "name": "Construction ERP - Site",
+ "short_name": "Site",
+ "start_url": "/app/site-log",
+ "display": "standalone",
+ "background_color": "#ffffff",
+ "theme_color": "#1a3c6e",
+ "description": "Field site log: concrete pours, weather delays, subcontractor headcount."
+}
